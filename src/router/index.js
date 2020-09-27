@@ -119,7 +119,7 @@ router.beforeEach((to,from,next)=>{
   let loginState=store.state.isLogin;
   console.log(store.state.isLogin);
   if(to.path.indexOf('/manage')>=0){
-    if(loginState||getCookie(loginCookieKey)){
+    if(loginState||!(getCookie(loginCookieKey)==null)){
       next();
     }
     else{
@@ -133,7 +133,11 @@ router.beforeEach((to,from,next)=>{
 
 router.afterEach((to,from,next)=>{
   if(from.path.indexOf('/manage')>=0){
+    console.log('我离开了');
     store.commit('loginOut');
+    // if(!(getCookie(loginCookieKey)==null)){
+    //   removeCookie(loginCookieKey);
+    // }
   }
 })
 

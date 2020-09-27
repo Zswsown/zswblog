@@ -61,6 +61,7 @@ export function setCookie(...args){
 // 删除cookie
 export function removeCookie(key){
   let cookie=getCookie(key);
+  console.log(cookie);
   // -1的话是设定它前一毫秒就已经失效
   setCookie(key,cookie,-1);
 }

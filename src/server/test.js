@@ -206,7 +206,7 @@ app.post('/api/loginCheck',(req,res)=>{
 
   if(req.body.code===SERVER.ROOT_CODE && req.body.password===SERVER.ROOT_PASSWORD){
     if(req.body.isKeepState){
-      // 将cookie发送至客户端进行保存
+      // 将cookie发送至客户端进行保存,设置为10天后过期
       res.cookie("cookie",cookie_value,{maxAge:10*24*60*60*1000});
       console.log(req.cookies);
       res.send({esg:'successWithCookie'});
