@@ -35,14 +35,14 @@
     /*让提示框文本居中显示*/
     position:fixed;
     left:50%;
-    top:50%;
+    top:30%;
     transform:translate(-50%,-50%);
     padding:8px 10px;
     z-index:9;
 
     border-radius:8px;
-    font-size:14px;
-    color:#fff;
-    background: rgba(0,0,0,.6);
+    font-size:18px;
+    color:#000;
+    background: rgba(0,0,0,.4);
 }
 </style>

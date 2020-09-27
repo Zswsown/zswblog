@@ -1,5 +1,6 @@
 <template>
     <div id="login">
+        <!--        @submit.prevent是阻止表单直接提交-->
         <form id="loginForm" action="http://localhost:3000/login" method="post" @submit.prevent="loginCheck">
             <div class="loginForm">
                 <div class="loginFormData">
@@ -11,7 +12,6 @@
                     <label for="keepState">十天内免登录</label>
                 </div>
                 <div class="loginFormFooter">
-<!--                    <p><input type="submit" class="loginbutton" value="登录"></p>-->
                     <button class="loginbutton">登录</button>
                 </div>
             </div>
@@ -26,16 +26,18 @@
     name: "Login",
     data(){
       return{
+        // 错误信息
         errMsg:'',
+        // 是否显示错误信息
         isErrMsgShow:false,
+        // 账号
         code:'',
+        // 密码
         password:'',
+        // 是否勾选十天免登录
         isKeepState:false,
       }
     },
-    // mounted(){
-    //   this.loginForm;
-    // },
     methods:{
       selectClick(){
         this.isKeepState=document.getElementById('keepState').checked;
@@ -61,26 +63,11 @@
             this.$router.push('/manage/blogManager');
           }
           else if(res.data.esg==='fail'){
-            alert('账号密码错误');
+            this.$toast.show('账号密码错误',2000);
           }
         })
         return false;
       },
-
-      login(){
-
-        if(this.code===null || this.password===null){
-          this.errMsg='账号或密码为空';
-
-        }
-        else{
-          $post('http:localhost:3000/login',
-            {code:this.code,password:this.password})
-            .then((data)=>{
-              console.log(data);
-            })
-        }
-      }
     }
 
   }

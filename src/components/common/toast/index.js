@@ -14,10 +14,11 @@ obj.install=function(Vue){
   // 3.将组件对象手动的挂载到某一个元素上
   toast.$mount(document.createElement('div'));
   // 4.toast.$el对应的就是div,将该元素添加到body上
-  document.appendChild(toast.$el);
+  document.body.appendChild(toast.$el);
   // 5.将main.js在安装该插件时传过来的Vue市里的prototype属性定义为该Toast对象toast
   Vue.prototype.$toast=toast
 }
 
 // 导出obj对象
 export default obj
+

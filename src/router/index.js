@@ -117,8 +117,12 @@ const router=new VueRouter({
 // 4.创建导航守卫
 router.beforeEach((to,from,next)=>{
   let loginState=store.state.isLogin;
-  console.log(store.state.isLogin);
   if(to.path.indexOf('/manage')>=0){
+    // 因为有两种登录，不记录账号密码的登录和保留登录状态的登录
+    // （1）不记录账号密码的登录，首先在vuex设置一个变量isLogin，
+    // 如果账号密码成功，会将它改成true，然后登录管理页面，若此时用户离开管理界面，则该变量改为false，页面切换到登录页面
+    // （2）记录登录状态的登录
+    // 先查看浏览器上有没有该cookie，有的话则直接进入管理页面，没的话跳转登录页面
     if(loginState||!(getCookie(loginCookieKey)==null)){
       next();
     }

@@ -171,36 +171,9 @@ app.post('/api/insertImages',(req,res)=> {
       imageurl:imageurl,
     })
   })
-  //
-  // form.parse(req, (err, fields, files) => {
-  //   // console.log(fields);
-  //   // console.log(files);
-  //
-  //   var addSql = 'INSERT INTO testimg(img_id,img_url) VALUES (0,?)';
-  //   console.log(files.image);
-  //   var imgurl = path.join(__dirname,files.imageName);
-  //   res.send({
-  //     path:imgurl
-  //   })
-  //   var addSqlParams = [imgurl];
-  //   pool.getConnection((err, connection) => {
-  //     connection.query(addSql, addSqlParams, (err, result) => {
-  //       // 释放数据库连接
-  //       connection.release();
-  //
-  //       if (err) {
-  //         console.log('[INSERT ERROR] - ' + err.message);
-  //         return;
-  //       }
-  //
-  //       console.log('---INSERT---');
-  //       console.log('INSERT ID:', result);
-  //       console.log('-----');
-  //     });
-  //   })
-  // });
 })
 
+// 监听登录，对登录进行检查
 app.post('/api/loginCheck',(req,res)=>{
   console.log('我监听到了');
 
