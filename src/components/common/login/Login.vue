@@ -75,17 +75,19 @@
 
 <style scoped>
     #login{
-        width:1080px;
-        margin-top: 44px;
-        height:calc(1920px - 44px);
-        background: #fff;
+        width: 1920px;
+        margin-top: 60px;
+        height:calc(1080px - 60px);
+        border-radius: 20px;
+        background:#ffffff url("../../../assets/images/loginBackground.jpg") no-repeat fixed center;
+        background-size:1920px 1020px;
         z-index: 9;
     }
     .loginForm{
         width:280px;
         height:210px;
-        background: #fff;
-        box-shadow: 2px 2px 2px 2px #eeeeee;
+        background: rgba(255,255,255,.4);
+        box-shadow: 1px 1px 1px 1px #eeeeee;
         border-radius:20px;
 
         position:fixed;

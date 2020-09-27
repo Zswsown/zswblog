@@ -21,8 +21,8 @@
 <style>
   @import '../src/assets/css/base.css';
   #app{
-    height:100vh;
-    width:100vw;
+    height:1080px;
+    width:1920px;
     display: flex;
     justify-content:center;
     background: #f4f4f4;

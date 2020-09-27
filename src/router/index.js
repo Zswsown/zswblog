@@ -66,7 +66,7 @@ const routes=[
   },
   {
     path:'/material',
-    component:Login,
+    component:Material,
   },
   {
     path:'/login',
@@ -127,7 +127,7 @@ router.beforeEach((to,from,next)=>{
       next();
     }
     else{
-      next({path:'/material'})
+      next({path:'/login'})
     }
   }
   else{
