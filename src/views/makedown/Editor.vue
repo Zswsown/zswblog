@@ -135,7 +135,7 @@
 
         // 3.将图片发送到服务器存储起来，并返回其在md文件中的文件名和该图片在服务器的url地址
         $axios({
-          url: 'http://localhost:3000/api/insertImages',
+          url: BASE_URL+api.INSERT_IMAGES,
           method: 'post',
           data: formdata,
           headers: { 'Content-Type': 'multipart/form-data' },
@@ -144,11 +144,6 @@
           this.$refs.md.$img2Url(pos, url.data.imageurl);
           console.log(url.data);
         })
-      },
-
-      setBlogContent(content){
-        console.log(content);
-        this.blogContent=content;
       },
 
       // 发布文章
@@ -164,6 +159,8 @@
         }
         else{
           this.saveBlog(value,render,title,api.INSERT_BLOG);
+          this.$toast.show('文章发布成功！',2000);
+          this.$router.push('/manage/blogManage');
         }
       }
     },

@@ -54,7 +54,7 @@ var pool=mysql.createPool({
 });
 
 app.get('/api/getBlogList',(req,res)=>{
-  var selectSql='SELECT * FROM test';
+  var selectSql='SELECT * FROM blogs';
   pool.getConnection((err,connection)=>{
     connection.query(selectSql,(err,result)=>{
       // 释放数据库连接
@@ -75,8 +75,7 @@ app.get('/api/getBlogList',(req,res)=>{
 })
 
 app.post('/api/selectBlog',(req,res)=>{
-  console.log(req.body);
-  var selectSql='SELECT * FROM test WHERE blog_id = '+req.body.blog_id;
+  var selectSql='SELECT * FROM blogs WHERE blog_id = '+req.body.blog_id;
   pool.getConnection((err,connection)=>{
     connection.query(selectSql,(err,result)=>{
       // 释放数据库连接
@@ -98,7 +97,7 @@ app.post('/api/selectBlog',(req,res)=>{
 })
 
 app.post('/api/insertBlog',(req,res)=>{
-  var addSql='INSERT INTO test(blog_id,blog_content,blog_text_content,blog_title,blog_createtime) VALUES (0,?,?,?,?)';
+  var addSql='INSERT INTO blogs(blog_id,blog_content,blog_text_content,blog_title,blog_createtime) VALUES (0,?,?,?,?)';
   var addSqlParams=[req.body.blog_content,req.body.blog_text_content,req.body.blog_title,req.body.blog_createtime];
   pool.getConnection((err,connection)=>{
     connection.query(addSql,addSqlParams,(err,result)=>{
@@ -120,7 +119,7 @@ app.post('/api/insertBlog',(req,res)=>{
 })
 
 app.post('/api/deleteBlog',(req,res)=>{
-  var delSql='DELETE FROM test WHERE blog_id = '+req.body.blog_id;
+  var delSql='DELETE FROM blogs WHERE blog_id = '+req.body.blog_id;
   pool.getConnection((err,connection)=>{
     connection.query(delSql,(err,result)=>{
       connection.release();
@@ -137,7 +136,7 @@ app.post('/api/deleteBlog',(req,res)=>{
 })
 
 app.post('/api/updateBlog',(req,res)=>{
-  var modSql='UPDATE test SET blog_title=?,blog_content=?,blog_text_content=?,blog_createtime=? WHERE blog_id=?';
+  var modSql='UPDATE blogs SET blog_title=?,blog_content=?,blog_text_content=?,blog_createtime=? WHERE blog_id=?';
   var modSqlParams=[req.body.blog_title,req.body.blog_content,req.body.blog_text_content,req.body.blog_createtime,req.body.blog_id];
   pool.getConnection((err,connection)=>{
     connection.query(modSql,modSqlParams,(err,result)=>{
@@ -147,6 +146,28 @@ app.post('/api/updateBlog',(req,res)=>{
        console.log('----UPDATE----');
       console.log('UPDATE affectdRows',result.affectedRows);
       console.log('----------------');
+    })
+  })
+})
+
+
+app.post('/api/selectMessage',(req,res)=>{
+  let selectSql='SELECT * FROM messages WHERE blog_id = '+req.body.blogID;
+
+  pool.getConnection((err,connection)=>{
+    connection.query(selectSql,(err,result)=>{
+      if(err){
+        console.log('----SELECT ERROR----');
+        console.log(err.message);
+        console.log('------------');
+        return;
+      }
+      else{
+        console.log('---SELECT ACCESS----');
+        console.log(result);
+        console.log('------------');
+        res.send({result});
+      }
     })
   })
 })
@@ -191,6 +212,85 @@ app.post('/api/loginCheck',(req,res)=>{
   else{
     res.send({esg:'fail'});
   }
+})
+
+app.post('/api/insertMessage',(req,res)=>{
+  let addSql='INSERT INTO messages(' +
+    'blog_id,message_author,message_content,message_createtime,message_author_email) ' +
+    'VALUES (?,?,?,?,?)';
+  let addParams=[
+    req.body.blogID,
+    req.body.messageAuthor,
+    req.body.messageContent,
+    req.body.messageCreateTime,
+    req.body.messageAuthorEmail
+  ];
+  pool.getConnection((err,connection)=>{
+    connection.query(addSql,addParams,(err,result)=>{
+      connection.release();
+      if(err){
+        console.log('[INSERT MESSAGE ERROR] - '+err.message);
+        res.send({esg:'fail'});
+        return;
+      }
+
+      console.log('---INSERT---');
+      console.log('INSERT ID:',result);
+      console.log('-----');
+      res.send({
+        esg:'success',
+        messageID:result.insertId,
+      });
+    })
+  })
+})
+
+app.post('/api/insertQuoteMessage',(req,res)=>{
+  // 数组要用二维数组来接收，不然会报错
+  let values=new Array();
+  let list=req.body.messageQuoteContentList;
+  // 将数组中的每个对象转变为数组格式（即数组中还是数组）
+  for(let i=0;i<list.length;i++){
+    values[i]=new Array(3);
+    values[i][0]=req.body.messageID;
+    values[i][1]=list[i].quote_message_author;
+    values[i][2]=list[i].quote_message_content;
+  }
+
+  let addSql='INSERT INTO quotemessages(message_id,quote_message_author,quote_message_content) VALUES ?';
+
+  pool.getConnection((err,connection)=>{
+    connection.query(addSql,[values],(err,result)=>{
+      if(err){
+        console.log('----INSERT QUOTE ERROR----');
+        console.log('ERROR:'+err.message);
+        console.log('--------------------');
+        return;
+      }
+      console.log('----INSERT QUOTE SUCCESS----');
+      console.log('INSERT ID:'+result.insertId);
+      console.log('----------------------');
+      res.send({id:result.insertId});
+    })
+  })
+})
+
+app.post('/api/selectQuoteMessage',(req,res)=>{
+  let selectSql='SELECT * FROM quotemessages WHERE message_id='+req.body.messageID;
+  pool.getConnection((err,connection)=>{
+    connection.query(selectSql,(err,result)=>{
+      if(err){
+        console.log('----SELECT ERROR----');
+        console.log(err.message);
+        console.log('----------------');
+        return;
+      }
+      console.log('----SELECT SUCCESS----');
+      console.log(result);
+      console.log('--------------------');
+      res.send({quoteMessages:result});
+    })
+  })
 })
 
 // 监听端口

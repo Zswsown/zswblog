@@ -12,28 +12,33 @@
                       :value="blogContent"
                       :subfield="false"
                       defaultOpen="preview"
+                      previewBackground="#ffffff"
                       :boxShadow="false"
                       :toolbarsFlag="false"
                       :editable="false"
                       :ishljs="true" ></mavon-editor>
-        <insert-message class="insertMessage"></insert-message>
+        <message-list :message-list="messageList"></message-list>
+        <insert-message class="insertMessage" :blog-i-d="blogID" @insertMessageClick="insertMessageClick"></insert-message>
     </div>
 </template>
 
 <script>
   import {$post} from "../../../../network/request";
   import InsertMessage from "../../message/InsertMessage";
+  import MessageList from "../../message/MessageList";
+  import {BASE_URL,api} from "../../../../common/const";
 
   export default {
     name: "BlogInfo",
     components:{
-      InsertMessage
+      InsertMessage,
+      MessageList,
     },
     data(){
       return{
-        BASE_URL:'http://localhost:3000/api/selectBlog',
         blogID:1,
         blogContent:'',
+        messageList:[],
       }
     },
     created() {
@@ -41,17 +46,35 @@
         this.blogID=this.$route.params.id;
     },
     mounted() {
-      // 请求博客信息
-      this.getBlogInfo(this.blogID);
+      // 请求信息
+      this.getInfo(this.blogID);
     },
     methods:{
+      // 请求信息，先请求博客内容，再渲染留言列表
+      async getInfo(id){
+        await this.getBlogInfo(id);
+        this.getBlogMessage(id);
+      },
+
       // 请求博客信息
       getBlogInfo(id){
-        $post(this.BASE_URL,{blog_id:id})
+        $post(BASE_URL+api.SELECT_BLOG,{blog_id:id})
           .then(res=>{
-            console.log(res.data.result[0].blog_content);
             this.blogContent=res.data.result[0].blog_content;
           });
+      },
+
+      //请求博客对应的评论
+      getBlogMessage(id){
+        $post(BASE_URL+api.SELECT_MESSAGE,{blogID:id}).then((res)=>{
+          this.messageList=res.data.result;
+        })
+      },
+
+      // 添加留言后进行刷新页面操作，重新获取留言信息
+      insertMessageClick(){
+        console.log('我被执行了');
+        this.getBlogMessage(this.blogID);
       }
     }
   }

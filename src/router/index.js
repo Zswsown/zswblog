@@ -136,6 +136,9 @@ router.beforeEach((to,from,next)=>{
 })
 
 router.afterEach((to,from,next)=>{
+  let toPath=to.path.split('/');
+  let fromPath=from.path.split('/');
+  if(!(toPath[0]==='/manage')&&fromPath[0]==='/manage')
   if(from.path.indexOf('/manage')>=0){
     console.log('我离开了');
     store.commit('loginOut');

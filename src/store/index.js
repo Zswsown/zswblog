@@ -6,7 +6,12 @@ Vue.use(Vuex);
 
 // 声明state
 const state={
-  isLogin:false
+  isLogin:false,
+  messageQuoteContent:{
+    quote_message_author:'',
+    quote_message_content:'',
+  },
+  messageQuoteContentList:[]
 }
 
 // 声明mutation
@@ -16,6 +21,14 @@ const mutations={
   },
   loginOut(state,payload){
     state.isLogin=false;
+  },
+  getMessageQuoteContentHtml(state,payload){
+    state.messageQuoteContent=payload;
+    state.messageQuoteContentList.push(state.messageQuoteContent);
+    console.log(state.messageQuoteContentList);
+  },
+  cleanMessageQuoteContentHtml(state){
+    state.messageQuoteContentList=[]
   }
 }
 
