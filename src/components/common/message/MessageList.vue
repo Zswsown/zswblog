@@ -1,6 +1,6 @@
 <template>
     <div class="messageList">
-        <message-item v-for="(item,index) in messageList" :message-item="item"></message-item>
+        <message-item v-for="(item,index) in messageList" :message-item="item" :index="index"></message-item>
     </div>
 </template>
 

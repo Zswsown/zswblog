@@ -51,10 +51,11 @@ var pool=mysql.createPool({
   port:dbConfig.port,
   database:dbConfig.database,
   multipleStatements:true,//多语句查询
+  connectionLimit:100,
 });
 
 app.get('/api/getBlogList',(req,res)=>{
-  var selectSql='SELECT * FROM blogs';
+  let selectSql='SELECT * FROM blogs';
   pool.getConnection((err,connection)=>{
     connection.query(selectSql,(err,result)=>{
       // 释放数据库连接
@@ -75,7 +76,7 @@ app.get('/api/getBlogList',(req,res)=>{
 })
 
 app.post('/api/selectBlog',(req,res)=>{
-  var selectSql='SELECT * FROM blogs WHERE blog_id = '+req.body.blog_id;
+  let selectSql='SELECT * FROM blogs WHERE blog_id = '+req.body.blog_id;
   pool.getConnection((err,connection)=>{
     connection.query(selectSql,(err,result)=>{
       // 释放数据库连接
@@ -157,13 +158,13 @@ app.post('/api/selectMessage',(req,res)=>{
   pool.getConnection((err,connection)=>{
     connection.query(selectSql,(err,result)=>{
       if(err){
-        console.log('----SELECT ERROR----');
+        console.log('----SELECT MESSAGE ERROR----');
         console.log(err.message);
         console.log('------------');
         return;
       }
       else{
-        console.log('---SELECT ACCESS----');
+        console.log('---SELECT MESSAGE ACCESS----');
         console.log(result);
         console.log('------------');
         res.send({result});
@@ -234,8 +235,8 @@ app.post('/api/insertMessage',(req,res)=>{
         return;
       }
 
-      console.log('---INSERT---');
-      console.log('INSERT ID:',result);
+      console.log('---INSERT MESSAGE SUCCESS---');
+      console.log('INSERT MESSAGE ID:',result);
       console.log('-----');
       res.send({
         esg:'success',
@@ -251,16 +252,18 @@ app.post('/api/insertQuoteMessage',(req,res)=>{
   let list=req.body.messageQuoteContentList;
   // 将数组中的每个对象转变为数组格式（即数组中还是数组）
   for(let i=0;i<list.length;i++){
-    values[i]=new Array(3);
+    values[i]=new Array(4);
     values[i][0]=req.body.messageID;
-    values[i][1]=list[i].quote_message_author;
-    values[i][2]=list[i].quote_message_content;
+    values[i][1]=list[i].quote_message_id;
+    values[i][2]=list[i].quote_message_author;
+    values[i][3]=list[i].quote_message_content;
   }
 
-  let addSql='INSERT INTO quotemessages(message_id,quote_message_author,quote_message_content) VALUES ?';
+  let addSql='INSERT INTO quotemessages(message_id,quote_message_id,quote_message_author,quote_message_content) VALUES ?';
 
   pool.getConnection((err,connection)=>{
     connection.query(addSql,[values],(err,result)=>{
+      connection.release();
       if(err){
         console.log('----INSERT QUOTE ERROR----');
         console.log('ERROR:'+err.message);
@@ -279,6 +282,7 @@ app.post('/api/selectQuoteMessage',(req,res)=>{
   let selectSql='SELECT * FROM quotemessages WHERE message_id='+req.body.messageID;
   pool.getConnection((err,connection)=>{
     connection.query(selectSql,(err,result)=>{
+      connection.release();
       if(err){
         console.log('----SELECT ERROR----');
         console.log(err.message);
@@ -289,6 +293,74 @@ app.post('/api/selectQuoteMessage',(req,res)=>{
       console.log(result);
       console.log('--------------------');
       res.send({quoteMessages:result});
+    })
+  })
+})
+
+app.post('/api/insertReplyMessage',(req,res)=>{
+  let addSql='INSERT INTO replymessages(message_id,reply_id,reply_author) values (?,?,?)';
+  let addParams=[req.body.messageID,req.body.replyMessageID,req.body.replyMessageAuthor];
+  pool.getConnection((err,connection)=>{
+    connection.query(addSql,addParams,(err,result)=>{
+      connection.release();
+      if(err){
+        console.log('---INSERT REPLY ERROR---');
+        console.log(err.message);
+        console.log('------');
+        return;
+      }
+      console.log('---INSERT REPLY SUCCESS');
+      console.log(result);
+      console.log('-------');
+      res.send({id:result.insertId});
+    })
+  })
+})
+
+app.post('/api/selectReplyMessage',(req,res)=>{
+  let selectSql='SELECT * FROM replymessages WHERE message_id ='+req.body.messageID;
+  pool.getConnection((err,connection)=>{
+    connection.query(selectSql,(err,result)=>{
+      connection.release();
+      if(err){
+        console.log('---SELECT REPLY ERROR---');
+        console.log(err.message);
+        console.log('------');
+        return;
+      }
+      console.log('---SELECT REPLY SUCCESS');
+      console.log(result);
+      console.log('-------');
+      res.send({replyMessage:result});
+    })
+  })
+})
+
+app.post('/api/selectMessageList',(req,res)=>{
+  let blogs=req.body.blogs;
+  console.log(blogs);
+  let selectSql='SELECT * FROM messages WHERE blog_id = ';
+  let selectSqls='';
+  for(let i=0;i<blogs.length;i++){
+    selectSqls=selectSqls+selectSql+blogs[i].blog_id+'; ';
+  }
+  //console.log(selectSqls);
+
+  pool.getConnection((err,connection)=>{
+    connection.query(selectSqls,(err,result)=>{
+      connection.release();
+      if(err){
+        console.log('---SELECT MESSAGE LIST ERROR---');
+        console.log(err);
+        console.log('----');
+        return;
+      }
+      console.log('---SELECT MESSAGE LIST SUCCESS---');
+      console.log(result);
+      console.log('----');
+      res.send({
+        result:result,
+      })
     })
   })
 })

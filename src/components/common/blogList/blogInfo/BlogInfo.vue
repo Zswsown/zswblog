@@ -24,7 +24,7 @@
 
 <script>
   import {$post} from "../../../../network/request";
-  import InsertMessage from "../../message/InsertMessage";
+  import InsertMessage from "../../message/insert/InsertMessage";
   import MessageList from "../../message/MessageList";
   import {BASE_URL,api} from "../../../../common/const";
 
@@ -44,8 +44,6 @@
     created() {
         // 获取博客的id
         this.blogID=this.$route.params.id;
-    },
-    mounted() {
       // 请求信息
       this.getInfo(this.blogID);
     },
@@ -73,7 +71,7 @@
 
       // 添加留言后进行刷新页面操作，重新获取留言信息
       insertMessageClick(){
-        console.log('我被执行了');
+        // console.log('我被执行了');
         this.getBlogMessage(this.blogID);
       }
     }

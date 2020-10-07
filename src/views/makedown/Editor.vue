@@ -147,7 +147,7 @@
       },
 
       // 发布文章
-      publish(){
+      async publish(){
         // 1.通过ref对组件进行命名，this.$refs.命名取到该组件，拿到该组件的render和value值，调用save方法进行保存
         let render=this.$refs.md.d_render;
         let value=this.$refs.md.value;
@@ -158,7 +158,7 @@
           alert('文章内容为空');
         }
         else{
-          this.saveBlog(value,render,title,api.INSERT_BLOG);
+          await this.saveBlog(value,render,title,api.INSERT_BLOG);
           this.$toast.show('文章发布成功！',2000);
           this.$router.push('/manage/blogManage');
         }

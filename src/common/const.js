@@ -4,6 +4,7 @@ export const api={
   DELETE_BLOG:"deleteBlog",
   INSERT_BLOG:"insertBlog",
   UPDATE_BLOG:"updateBlog",
+  SELECT_BLOGS:'getBlogList',
   INSERT_IMAGES:"insertImages",
   SELECT_MESSAGE:"selectMessage",
   DELETE_MESSAGE:"deleteMessage",
@@ -11,6 +12,9 @@ export const api={
   UPDATE_MESSAGE:"updateMessage",
   INSERT_QUOTE_MESSAGE:'insertQuoteMessage',
   SELECT_QUOTE_MESSAGE:'selectQuoteMessage',
+  INSERT_REPLY_MESSAGE:'insertReplyMessage',
+  SELECT_REPLY_MESSAGE:'selectReplyMessage',
+  SELECT_MESSAGE_LIST:'selectMessageList',
   LOGIN_CHECK:'loginCheck',
   LOGIN:'login',
 }
