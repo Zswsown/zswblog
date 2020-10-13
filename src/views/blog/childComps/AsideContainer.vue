@@ -19,7 +19,7 @@
 
 <style scoped>
     #asideContainer{
-        width:30%;
+        width:460px;
         height:calc(100vh - 60px);
         display: flex;
         flex-direction:column;

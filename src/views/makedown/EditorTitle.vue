@@ -47,6 +47,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        background: #ffffff;
+        border-radius: 10px 10px 0 0 ;
     }
     .h{
         width:100px;

@@ -50,6 +50,7 @@
         return Math.ceil(this.total/this.defaultPageSize);
       }
     },
+
     methods:{
       // 上一页、下一页按钮被点击时，页码发生改变，且要传出被点击的页码
       setPage(page){

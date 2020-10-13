@@ -48,10 +48,11 @@
     .blogItem{
         height:90px;
         margin-bottom:20px;
-        width:100%;
-        background: #fff;
+        width:1360px;
+        /*background: rgba(255,255,255,.8);*/
+        background: #ffffff;
         border-radius:10px;
-        box-shadow: 2px 2px 2px 2px #eeeeee;
+        /*box-shadow: 2px 2px 2px 2px #eeeeee;*/
         padding: 0 10px;
         border:2px solid transparent;
     }
@@ -61,9 +62,6 @@
     .blogTitle{
         height:20px;
         width: 100%;
-        background: #fff;
-        border-radius:20px 20px 0 0;
-
 
         font-size: 18px;
         line-height:20px;
@@ -73,7 +71,7 @@
         height:48px;
         margin-top: 4px;
         line-height: 16px;
-        width: 100%;
+        width: 1336px;
         /*background: #42b983;*/
 
 

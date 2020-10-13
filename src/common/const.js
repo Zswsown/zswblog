@@ -7,7 +7,10 @@ export const api={
   SELECT_BLOGS:'getBlogList',
   INSERT_IMAGES:"insertImages",
   SELECT_MESSAGE:"selectMessage",
+
   DELETE_MESSAGE:"deleteMessage",
+  DELETE_MESSAGES:'deleteMessages',
+
   INSERT_MESSAGE:"insertMessage",
   UPDATE_MESSAGE:"updateMessage",
   INSERT_QUOTE_MESSAGE:'insertQuoteMessage',
@@ -15,6 +18,11 @@ export const api={
   INSERT_REPLY_MESSAGE:'insertReplyMessage',
   SELECT_REPLY_MESSAGE:'selectReplyMessage',
   SELECT_MESSAGE_LIST:'selectMessageList',
+  SELECT_MESSAGES:'getMessageList',
   LOGIN_CHECK:'loginCheck',
   LOGIN:'login',
+  SELECT_WATCH_SUM:'getWatchSum',
+  UPDATE_WATCH_SUM:'updateWatchSum',
+
+  SELECT_MATERIALS:'selectMaterialList',
 }

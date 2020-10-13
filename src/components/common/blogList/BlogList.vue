@@ -7,11 +7,13 @@
 </template>
 
 <script>
-    import BlogItem from './blogItem/BlogItem'
+    import BlogItem from './blogItem/BlogItem';
+
   export default {
     name: "BlogList",
     components:{
-      BlogItem
+      BlogItem,
+
     },
     props:{
       blogList: {
@@ -30,8 +32,8 @@
         height:100%;
         width:100%;
         padding:1px 0;
-        overflow-y:scroll;
-        overflow-x:hidden;
+        /*overflow-y:scroll;*/
+        /*overflow-x:hidden;*/
 
         display: flex;
         flex-direction: column;

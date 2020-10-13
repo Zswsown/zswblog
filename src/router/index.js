@@ -7,8 +7,7 @@ const loginCookieKey='cookie';
 
 // 解决Vue-Router升级导致的Uncaught(in promise) navigation guard问题
 const originalPush = VueRouter.prototype.push
-VueRouter.prototype.push = function push (location, onResolve, onReject) {
-  if (onResolve || onReject) return originalPush.call(this, location, onResolve, onReject)
+VueRouter.prototype.push = function push(location) {
   return originalPush.call(this, location).catch(err => err)
 }
 
@@ -25,12 +24,11 @@ const BlogManage=()=>import('../views/manage/childComps/blogManage/BlogManage')
 const BlogInfo=()=>import('../components/common/blogList/blogInfo/BlogInfo')
 const EditorManage=()=>import('../views/makedown/EditorManage')
 const EditorAgainManage=()=>import('../views/makedown/EditorAgainManage')
+const MaterialManage=()=>import('../views/manage/childComps/materialManage/MaterialManage')
 
 const Login=()=>import('../components/common/login/Login')
 
 const MessageManage=()=>import('../views/manage/childComps/messageManage/MessageManage')
-
-
 
 // 1.安装路由插件
 Vue.use(VueRouter)
@@ -103,6 +101,10 @@ const routes=[
       {
         path:'editorManage',
         component:EditorManage,
+      },
+      {
+        path:'materialManage',
+        component:MaterialManage,
       }
     ]
   }

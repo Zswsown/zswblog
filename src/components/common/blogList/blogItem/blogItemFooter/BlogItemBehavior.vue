@@ -7,6 +7,7 @@
 </template>
 
 <script>
+    const SERVER=require('../../../../../server/common/const');
   import {$post} from "../../../../../network/request";
 
   export default {
@@ -35,7 +36,7 @@
       },
       // 删除
       remove(){
-        $post(this.BASE_URL,{blog_id:this.blogItem.blog_id})
+        $post(SERVER.BASE_URL+SERVER.api.DELETE_BLOG,{blog_id:this.blogItem.blog_id})
           .then((res)=>{
             console.log(res);
             // 刷新文章列表的文章数据

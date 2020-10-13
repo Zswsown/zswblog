@@ -154,7 +154,9 @@ p{
     margin:16px 0 0 0;
     text-indent:2em;
 }
-
+.messageHeader p{
+    margin: 0 10px;
+}
     .messageFooter p{
         margin:16px 0 0 730px;
         font-size:14px;

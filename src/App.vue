@@ -25,7 +25,9 @@
     width:1920px;
     display: flex;
     justify-content:center;
-    background: #f4f4f4;
+    /*background: #f4f4f4;*/
+    background:#ffffff url("assets/images/loginBackground.jpg") no-repeat fixed center;
+    background-size:1920px 1080px;
   }
   .navBar{
     position:fixed;

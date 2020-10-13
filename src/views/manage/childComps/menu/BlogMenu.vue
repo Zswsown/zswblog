@@ -33,9 +33,10 @@
         align-items: center;
         width: 100%;
 
-        background: #fff;
+        background: #ffffff;
         list-style:none;
         border-radius: 20px;
+        margin-bottom: 20px;
     }
     .tabTitle{
         height:45px;

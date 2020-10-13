@@ -3,13 +3,14 @@
     <tbody v-if="isShow">
         <message-item ref="messageItem"
                       v-for="(item,index) in messageBlock"
-                      :message-block-title="messageBlock.blog_title"
                       :message-item="item"></message-item>
     </tbody>
 </template>
 
 <script>
-    import MessageItem from './MessageItem'
+    import {$get,$post,$axios} from '../../../../network/request';
+    import {BASE_URL,api} from '../../../../common/const';
+    import MessageItem from './MessageItem';
   export default {
     name: "MessageBlock",
     components:{
@@ -35,6 +36,7 @@
       }
     },
     methods:{
+      // 设置合并单元格（文章标题处）
       setRowspan(){
         if(this.messageBlock.length>0){
           this.$nextTick(()=>{
@@ -44,7 +46,7 @@
             this.$refs.messageItem[0].rowspanNum=this.messageBlock.length;
           })
         }
-      }
+      },
     }
   }
 </script>

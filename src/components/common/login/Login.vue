@@ -83,6 +83,8 @@
         background-size:1920px 1020px;
         z-index: 9;
     }
+
+
     .loginForm{
         width:280px;
         height:210px;

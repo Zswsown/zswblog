@@ -23,7 +23,7 @@
         display:flex;
         margin-top:60px;
 
-        width:80%;
+        width:1536px;
         height:calc(100vh - 60px);
     }
 </style>

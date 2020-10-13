@@ -2,7 +2,9 @@
     <div id="manage">
         <tab-menu class="tabMenu"></tab-menu>
         <div class="tabContent">
-            <router-view></router-view>
+            <keep-alive>
+                <router-view></router-view>
+            </keep-alive>
         </div>
     </div>
 </template>
@@ -35,15 +37,15 @@ import TabMenu from './childComps/menu/TabMenu'
 }
 
 .tabMenu{
-    width:20%;
-    margin:0 5px;
+    width:300px;
+    margin-right: 60px;
 }
 
     .tabContent{
         display: flex;
         flex-direction: column;
         flex:1;
-        background: #fff;
+        background: rgba(255,255,255,0);
         border-radius: 10px;
     }
 </style>

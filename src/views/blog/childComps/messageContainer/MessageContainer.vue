@@ -3,40 +3,44 @@
         <div class="messageNavbar">
             <div class="title">留言列表</div>
             <div class="insertMessage">
-                <img @mouseenter="mouseenter"
-                     @mouseleave="mouseleave"
-                     src="../../../../../../zswblog/src/assets/images/message.svg" alt="">
+                <img src="../../../../../../zswblog/src/assets/images/message.svg" alt="">
             </div>
         </div>
-        <message-item></message-item>
-        <message-item></message-item>
-        <message-item></message-item>
-        <message-item></message-item>
-        <message-item></message-item>
-        <message-item></message-item>
-        <message-item></message-item>
-
+        <message-list :message-list="getMessages"></message-list>
     </div>
 </template>
 
 <script>
-    import MessageItem from "./MessageItem";
+    import MessageList from './MessageList';
+    import {$get} from '../../../../network/request';
+    import {BASE_URL,api} from '../../../../common/const';
+    import {chunk} from '../../../../common/utils';
   export default {
     name: "MessageContainer",
     components:{
-      MessageItem
+      MessageList,
     },
     data(){
       return{
-        isMessageIconTapShow:false
+        messageList:[],
+        currentMessageList:[],
+      }
+    },
+    created() {
+      this.getMessageList();
+    },
+    computed:{
+      getMessages(){
+        return this.currentMessageList;
       }
     },
     methods:{
-      mouseenter(){
-        this.isMessageIconTapShow=true;
-      },
-      mouseleave(){
-        this.isMessageIconTapShow=false;
+      getMessageList(){
+        $get(BASE_URL+api.SELECT_MESSAGES).then(res=>{
+          this.messageList=res.data.result;
+          this.messageList=chunk(this.messageList,20);
+          this.currentMessageList=this.messageList[0];
+        })
       }
     }
   }
@@ -49,6 +53,7 @@
         border-radius:20px;
         background: #fff;
         box-shadow: 2px 2px 2px 2px #eeeeee;
+        margin-bottom: 20px;
     }
     .messageNavbar{
         display: flex;

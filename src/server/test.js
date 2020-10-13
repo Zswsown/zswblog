@@ -151,7 +151,6 @@ app.post('/api/updateBlog',(req,res)=>{
   })
 })
 
-
 app.post('/api/selectMessage',(req,res)=>{
   let selectSql='SELECT * FROM messages WHERE blog_id = '+req.body.blogID;
 
@@ -217,14 +216,15 @@ app.post('/api/loginCheck',(req,res)=>{
 
 app.post('/api/insertMessage',(req,res)=>{
   let addSql='INSERT INTO messages(' +
-    'blog_id,message_author,message_content,message_createtime,message_author_email) ' +
-    'VALUES (?,?,?,?,?)';
+    'blog_id,message_author,message_content,message_createtime,message_author_email,message_selected) ' +
+    'VALUES (?,?,?,?,?,?)';
   let addParams=[
     req.body.blogID,
     req.body.messageAuthor,
     req.body.messageContent,
     req.body.messageCreateTime,
-    req.body.messageAuthorEmail
+    req.body.messageAuthorEmail,
+    0,
   ];
   pool.getConnection((err,connection)=>{
     connection.query(addSql,addParams,(err,result)=>{
@@ -242,6 +242,53 @@ app.post('/api/insertMessage',(req,res)=>{
         esg:'success',
         messageID:result.insertId,
       });
+    })
+  })
+})
+
+app.post('/api/deleteMessage',(req,res)=>{
+  // 因为有外键约束，在执行删除操作时，先将外键约束关闭，删除好数据后，在开启外键约束
+  let deleteSql='SET foreign_key_checks = 0;' +
+    'DELETE quotemessages,replymessages,messages FROM messages ' +
+    'LEFT JOIN quotemessages ON messages.message_id=quotemessages.message_id ' +
+    'LEFT JOIN replymessages ON messages.message_id=replymessages.message_id ' +
+    'WHERE messages.message_id = '+req.body.message_id
+    +';SET foreign_key_checks = 1;';
+  pool.getConnection((err,connection)=>{
+    connection.query(deleteSql,(err,result)=>{
+      connection.release();
+      if(err){
+        console.log('[DELETE MESSAGE ERROR] - ' +err.message);
+        return;
+      }
+      console.log('----DELETE MESSAGE----');
+      console.log('DELETE MESSAGE ID:',result);
+      console.log('--------------');
+      res.send({result:result});
+    })
+  })
+})
+
+app.post('/api/deleteMessages',(req,res)=>{
+  // 因为有外键约束，在执行删除操作时，先将外键约束关闭，删除好数据后，在开启外键约束
+  let deleteSql='SET foreign_key_checks = 0;' +
+    'DELETE quotemessages,replymessages,messages FROM messages ' +
+    'LEFT JOIN quotemessages ON messages.message_id=quotemessages.message_id ' +
+    'LEFT JOIN replymessages ON messages.message_id=replymessages.message_id ' +
+    'WHERE messages.message_id in '+req.body.deleteMessageIDs
+    +';SET foreign_key_checks = 1;';
+  pool.getConnection((err,connection)=>{
+    connection.query(deleteSql,(err,result)=>{
+      connection.release();
+      if(err){
+        console.log('[DELETE MESSAGES ERROR] - ' +err.message);
+        res.send({err:err.message});
+        return;
+      }
+      console.log('----DELETE MESSAGES----');
+      console.log('DELETE MESSAGES ID:',result);
+      console.log('--------------');
+      res.send({result:result});
     })
   })
 })
@@ -356,6 +403,135 @@ app.post('/api/selectMessageList',(req,res)=>{
         return;
       }
       console.log('---SELECT MESSAGE LIST SUCCESS---');
+      console.log(result);
+      console.log('----');
+      res.send({
+        result:result,
+      })
+    })
+  })
+})
+
+app.get('/api/getMessageList',(req,res)=>{
+  let selectSql='SELECT * FROM messages';
+  pool.getConnection((err,connection)=>{
+    connection.query(selectSql,(err,result)=>{
+      connection.release();
+      if(err){
+        console.log('---SELECT MESSAGESUM ERROR---');
+        console.log(err.message);
+        console.log('-----');
+        return;
+      }
+      console.log('---SELECT MESSAGESUM SUCCESS---');
+      console.log(result);
+      console.log('----');
+      res.send({
+        result:result,
+      })
+    })
+  })
+})
+
+app.get('/api/getWatchSum',(req,res)=>{
+  let selectSql="SELECT * FROM root WHERE root_code='Zswsown' AND root_password=314356";
+  pool.getConnection((err,connection)=>{
+    connection.query(selectSql,(err,result)=>{
+      connection.release();
+      if(err){
+        console.log('---SELECT WATCHSUM ERROR---');
+        console.log(err.message);
+        console.log('-----');
+        return;
+      }
+      let formatResult=JSON.parse(JSON.stringify(result));
+      console.log('---SELECT WATCHSUM SUCCESS---');
+      console.log(formatResult[0].watch_sum);
+      console.log('----');
+      res.send({
+        result:formatResult[0].watch_sum,
+      })
+    })
+  })
+})
+
+app.post('/api/updateWatchSum',(req,res)=>{
+  let updateSql="UPDATE root set watch_sum=? WHERE root_code=? and root_password=?";
+  console.log(req.body.watchSum);
+  let updateParams=[req.body.watchSum,'Zswsown',314356];
+  pool.getConnection((err,connection)=>{
+    connection.query(updateSql,updateParams,(err,result)=>{
+      connection.release();
+      if(err){
+        console.log('---UPDATE WATCHSUM ERROR---');
+        console.log(err.message);
+        console.log('-----');
+        return;
+      }
+      console.log('---UPDATE WATCHSUM SUCCESS---');
+      console.log(result);
+      console.log('----');
+      res.send({
+        result:result,
+      })
+    })
+  })
+})
+
+app.post('/api/insertMaterialIcon',(req,res)=>{
+  // 创建一个form对象
+  const form = new formidable.IncomingForm();
+  // 上传文件的保存地址
+  form.uploadDir = './upload/images/materials'
+  // 设置添加的文件的扩展名
+  form.keepExtensions = true;
+
+  // fields指的是我们前台发送过来的表单数据，files指的是上传文件
+  form.parse(req,(err,fields,files)=>{
+    // // 图片上传后的放在服务器的地址
+    var path=files.material.path.replace(/\\/g,'/');
+    var iconurl=SERVER.BASE_URL+path;
+    // console.log(iconurl);
+    // console.log(path);
+    res.send({
+      path:path,
+      iconurl:iconurl,
+    })
+  })
+})
+
+app.post('/api/insertMaterial',(req,res)=>{
+  let addSql='INSERT INTO materials(material_url,material_title,material_icon_url) VALUES (?,?,?)';
+  let addParams=[req.body.material.material_url,req.body.material.material_title,req.body.material.material_icon_url];
+  pool.getConnection((err,connection)=>{
+    connection.query(addSql,addParams,(err,result)=>{
+      connection.release();
+      if(err){
+        console.log('---INSERT MATERIAL ERROR---');
+        console.log(err.message);
+        console.log('------');
+        return;
+      }
+      console.log('---INSERT MATERIAL SUCCESS');
+      console.log(result);
+      console.log('-------');
+      res.send({result:'success'});
+    })
+  })
+})
+
+app.get('/api/selectMaterialList',(req,res)=>{
+  let selectSql='SELECT * FROM materials';
+  pool.getConnection((err,connection)=>{
+    connection.query(selectSql,(err,result)=>{
+      connection.release();
+      if(err){
+        console.log('---SELECT MATERIALS ERROR---');
+        console.log(err.message);
+        console.log('-----');
+        return;
+      }
+      console.log('---SELECT MATERIALS SUCCESS---');
       console.log(result);
       console.log('----');
       res.send({

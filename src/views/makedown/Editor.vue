@@ -92,7 +92,6 @@
     },
 
     methods:{
-
       // 保存文章
       // value指的是编辑时的文字（Markdown形式），render指的是渲染好的HTML代码
       // 给id设为-1，以便区分是更新文章还是新建文章
@@ -129,6 +128,7 @@
         // 新建一个formData对象，因为普通的上传文字的格式为‘Content-Type’:‘application/x-www-application-urlencoded’，不支持上传照片，
         // ‘Content-Type’:‘multipart/form-data’这种格式的支持上传照片文件
         var formdata = new FormData();
+        console.log($file);
 
         // 2.在form上面添加属于该文件名的key值，便于在后台取到该文件名
         formdata.append('imageName', $file);
@@ -160,7 +160,9 @@
         else{
           await this.saveBlog(value,render,title,api.INSERT_BLOG);
           this.$toast.show('文章发布成功！',2000);
-          this.$router.push('/manage/blogManage');
+          setTimeout(()=>{
+            this.$router.push('/manage/blogManage');
+          },2000);
         }
       }
     },

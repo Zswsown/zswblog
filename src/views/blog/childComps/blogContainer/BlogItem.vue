@@ -1,33 +1,53 @@
 <template>
-    <div class="blogItem">
-        <div class="blogTitle">封装JSONP</div>
-        <div class="blogContent">的痕迹萨克的哈数据的哈数据的哈师范沙的痕迹萨克的哈数据的哈数据的哈师范沙发沙发沙发上放沙发的痕迹萨克的哈数据的哈数据的哈师范沙发沙发沙发上放沙发沙发沙发沙发沙发沙发沙发上的痕迹萨克的哈数据的哈数据的哈师范沙发沙发沙发上放沙发沙发沙发沙发</div>
-        <div class="blogInfo">2020-09-20 19:10</div>
+    <div class="blogItem" @click="itemClick">
+        <div class="blogTitle">{{blogItem.blog_title}}</div>
+        <div class="blogContent">{{blogItem.blog_text_content}}</div>
+        <div class="blogInfo">{{getFomateTime}}</div>
     </div>
 </template>
 
 <script>
+  import {format} from "../../../../common/utils";
+
   export default {
-    name: "BlogItem"
+    name: "BlogItem",
+    props:{
+      blogItem:{
+        type:Object,
+        default(){
+          return {}
+        }
+      }
+    },
+    computed:{
+      getFomateTime(){
+        return format(this.blogItem.blog_createtime);
+      }
+    },
+    methods:{
+      itemClick(){
+        this.$router.push('/blog/blogItemInfo/'+this.blogItem.blog_id);
+      }
+    }
   }
 </script>
 
 <style scoped>
     .blogItem{
-        height:90px;
+        height:92px;
         margin-bottom:10px;
-        width:100%;
+        width:1020px;
         background: #fff;
         border-radius:20px;
-        box-shadow: 2px 2px 2px 2px #eeeeee;
-
+        /*box-shadow: 2px 2px 2px 2px #eeeeee;*/
+        border:2px solid transparent;
     }
     .blogItem:hover{
         border:2px solid #7d3990;
     }
     .blogTitle{
         height:20px;
-        width: 100%;
+        width:100%;
         background: #fff;
         border-radius:20px 20px 0 0;
         padding:0 10px;
@@ -40,7 +60,7 @@
         height:48px;
         margin-top: 4px;
         line-height: 16px;
-        width: 100%;
+        width:100%;
         /*background: #42b983;*/
         padding:0 10px;
 

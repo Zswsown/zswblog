@@ -59,7 +59,7 @@
           centerPage=this.totalPage-3;//注意这里是centerPage，不是this.current
         }
         // 若当前页面小于或等于4，则取4为中心
-        if(this.current<4){
+        if(this.current<=4){
           centerPage=4;
         }
 
@@ -132,6 +132,7 @@
      text-align: center;
      border:1px solid #d9d9d9;
      border-radius:2px;
+     background: #fff;
  }
     .active{
         border:1px solid #7d3990;

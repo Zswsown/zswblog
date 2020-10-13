@@ -148,7 +148,7 @@
       },
 
       // 发布文章
-      publish(id){
+      async publish(id){
         console.log(this.$refs.md);
         // 1.通过ref对组件进行命名，this.$refs.命名取到该组件，拿到该组件的render和value值，调用save方法进行保存
         let render=this.$refs.md.d_render;
@@ -161,7 +161,11 @@
         }
         else{
           console.log(id);
-          this.updateBlog(value,render,title,api.UPDATE_BLOG,id);
+          await this.updateBlog(value,render,title,api.UPDATE_BLOG,id);
+          this.$toast.show('文章修改成功！',2000);
+          setTimeout(()=>{
+            this.$router.push('/manage/blogManage');
+          },2000);
         }
       }
     },
