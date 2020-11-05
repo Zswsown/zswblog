@@ -38,6 +38,8 @@
 
     import MessageReplyContent from "./MessageReplyContent";
     import MessageQuoteContentList from "./MessageQuoteContentList";
+    // const MessageReplyContent=()=>import("./MessageReplyContent");
+    // const MessageQuoteContentList=()=>import("./MessageQuoteContentList");
 
     export default {
     name: "MessageItem",
@@ -129,7 +131,8 @@
 
 <style scoped>
 .messageItem{
-    width:940px;
+    /*width:940px;*/
+    width: 100%;
     margin:0 auto;
     padding-bottom:10px;
     border-bottom:1px dashed #ccc;
@@ -139,10 +142,11 @@ span{
 }
 .messageAuthor{
     font-weight:700;
-    font-size: 18px;
+    font-size: 1em;
 }
 p{
-    margin:16px 0 0 0;
+    margin: 0;
+    padding: 0;
 }
 .messageContent p{
     /*缩进两字符*/
@@ -155,10 +159,23 @@ p{
     text-indent:2em;
 }
 .messageHeader p{
-    margin: 0 10px;
+    margin: 6px 10px;
 }
+    .messageFooter{
+        *zoom:1;
+    }
+
+    .messageFooter::after{
+        content: '';
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+    }
+
     .messageFooter p{
-        margin:16px 0 0 730px;
-        font-size:14px;
+        float: right;
+        margin: 16px 10px 0;
+        font-size:.78em;
     }
 </style>

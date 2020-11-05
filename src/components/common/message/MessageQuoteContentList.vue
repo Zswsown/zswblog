@@ -7,6 +7,7 @@
 
 <script>
     import MessageQuoteContent from "./MessageQuoteContent";
+    // const MessageQuoteContent=()=>import("./MessageQuoteContent");
   export default {
     name: "MessageQuoteContentList",
     components:{

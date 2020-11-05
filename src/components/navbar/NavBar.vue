@@ -16,7 +16,8 @@
 </template>
 
 <script>
-    import NavBarItem from './NavBarItem'
+    import NavBarItem from './NavBarItem';
+    // const NavBarItem=()=>import("./NavBarItem");
   export default {
     name: "NavBar",
     components: {NavBarItem},
@@ -25,11 +26,12 @@
 
 <style scoped>
     #navBar{
-        height:44px;
+        height:44PX;
         width:100%;
         display:flex;
         justify-content: center;
         align-items:center;
         background: #fff;
+        z-index: 9;
     }
 </style>

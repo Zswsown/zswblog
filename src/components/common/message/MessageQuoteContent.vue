@@ -41,9 +41,11 @@
     }
     a{
         font-weight: 700;
+        text-decoration: none;
+        color: #333;
     }
     p{
         margin-top:16px;
-        text-indent: 2em;
+        /*text-indent: 2em;*/
     }
 </style>

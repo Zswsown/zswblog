@@ -1,6 +1,8 @@
 <template>
     <li class="messageItem">
-        <a>@{{messageItem.message_author}}</a>
+        <p>
+            <a>@{{messageItem.message_author}}</a>
+        </p>
     </li>
 </template>
 
@@ -22,10 +24,11 @@
     .messageItem{
         display: block;
         width: 100%;
-        margin-top:5px;
+
         height:20px;
         line-height: 20px;
-        font-size:16px;
-        margin-bottom: 8px;
+        font-size:1em;
+        margin-bottom: 2px;
+
     }
 </style>

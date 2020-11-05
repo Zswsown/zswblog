@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import toast from './components/common/toast/index'
+import 'lib-flexible/flexible'
 
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'

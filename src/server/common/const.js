@@ -1,5 +1,6 @@
 module.exports={
-  BASE_URL:'http://localhost:3000/',
+  // BASE_URL:'http://localhost:3000/',
+  BASE_URL:'http://81.69.15.79:3000/',
   EMAIL_ADDRESS:'https://mail.163.com/',
   ROOT_CODE:'Zswsown',
   ROOT_PASSWORD:'314356',
@@ -11,5 +12,5 @@ module.exports={
     SELECT_MESSAGE_LIST:'api/selectMessageList',
     INSERT_MATERIAL:'api/insertMaterial',
     INSERT_MATERIAL_ICON:'api/insertMaterialIcon',
-  }
+  },
 }

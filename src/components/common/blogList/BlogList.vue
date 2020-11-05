@@ -8,7 +8,7 @@
 
 <script>
     import BlogItem from './blogItem/BlogItem';
-
+    // const BlogItem=()=>import("./blogItem/BlogItem");
   export default {
     name: "BlogList",
     components:{
@@ -29,8 +29,9 @@
 
 <style scoped>
     .blogList{
-        height:100%;
-        width:100%;
+        /*height: 864px;*/
+        /*width: 1368px;*/
+        width: 100%;
         padding:1px 0;
         /*overflow-y:scroll;*/
         /*overflow-x:hidden;*/

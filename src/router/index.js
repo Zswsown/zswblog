@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import {getCookie,setCookie,removeCookie} from "../common/cookie";
+import {localStorage, timeStorage} from "../common/storage";
 import store from '../store/index';
 
 const loginCookieKey='cookie';
@@ -16,8 +17,10 @@ const Index=()=>import('../views/index/Index')
 const Blog=()=>import('../views/blog/Blog')
 const Material=()=>import('../views/material/Material')
 const Mine=()=>import('../views/mine/Mine')
-const BlogItemInfo=()=>import('../views/blog/childComps/blogContainer/BlogItemInfo')
+
+// const BlogItemInfo=()=>import('../views/blog/childComps/blogContainer/BlogItemInfo')
 const BlogContainer=()=>import('../views/blog/childComps/blogContainer/BlogContainer')
+const BlogInfoBefore=()=>import('../views/blog/childComps/blogContainer/BlogInfo')
 
 const Manage=()=>import('../views/manage/Manage')
 const BlogManage=()=>import('../views/manage/childComps/blogManage/BlogManage')
@@ -44,23 +47,31 @@ const routes=[
     component:Index,
   },
 
+  // {
+  //   path:'/blog',
+  //   component:Blog,
+  //   children:[
+  //     {
+  //       path:'/',
+  //       redirect:'blogContainer',
+  //     },
+  //     {
+  //       path:'blogContainer',
+  //       component:BlogContainer,
+  //     },
+  //     {
+  //       path:'blogItemInfo/:id',
+  //       component:BlogItemInfo
+  //     }
+  //   ]
+  // },
   {
-    path:'/blog',
+    path: '/blog',
     component:Blog,
-    children:[
-      {
-        path:'/',
-        redirect:'blogContainer',
-      },
-      {
-        path:'blogContainer',
-        component:BlogContainer,
-      },
-      {
-        path:'blogItemInfo/:id',
-        component:BlogItemInfo
-      }
-    ]
+  },
+  {
+    path: '/blogInfo/:id',
+    component:BlogInfoBefore,
   },
   {
     path:'/material',
@@ -110,6 +121,11 @@ const routes=[
   }
 ]
 
+// // 页面刷新时，重新赋值token
+// if(localStorage.getItem('token')){
+//   this.$store.commit("setToken",localStorage.getItem('token'));
+// }
+
 // 3.创建路由对象
 const router=new VueRouter({
   routes,
@@ -118,18 +134,27 @@ const router=new VueRouter({
 
 // 4.创建导航守卫
 router.beforeEach((to,from,next)=>{
-  let loginState=store.state.isLogin;
   if(to.path.indexOf('/manage')>=0){
+  // if(to.path=='/manage'){
     // 因为有两种登录，不记录账号密码的登录和保留登录状态的登录
     // （1）不记录账号密码的登录，首先在vuex设置一个变量isLogin，
     // 如果账号密码成功，会将它改成true，然后登录管理页面，若此时用户离开管理界面，则该变量改为false，页面切换到登录页面
     // （2）记录登录状态的登录
     // 先查看浏览器上有没有该cookie，有的话则直接进入管理页面，没的话跳转登录页面
-    if(loginState||!(getCookie(loginCookieKey)==null)){
+    // if(loginState||!(getCookie(loginCookieKey)==null));
+    //   next();
+    // }
+    //
+    // else{
+    //   console.log('fail');
+    //   next({path:'/login'})
+    // }
+    console.log(timeStorage.getItem("token"));
+    if(store.state.isLogin||!(timeStorage.getItem("token")==undefined)){
       next();
     }
     else{
-      next({path:'/login'})
+      next({path:'/login'});
     }
   }
   else{

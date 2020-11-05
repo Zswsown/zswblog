@@ -1,12 +1,18 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import {localStorage,timeStorage} from "../common/storage";
 
 // 1.安装Vuex
 Vue.use(Vuex);
 
 // 声明state
 const state={
+  // 是否登录
   isLogin:false,
+  // token值
+  token:'',
+  // token的过期时间
+  expriesIn: 0,
   // 是否是回复
   isReply:false,
   // 是否是引用
@@ -35,9 +41,30 @@ const mutations={
   login(state,payload){
     state.isLogin=true;
   },
+
   // 退出登录
   loginOut(state,payload){
     state.isLogin=false;
+  },
+
+  // 设置token
+  setToken(state,payload){
+    state.token=payload.token;
+    state.expriesIn=payload.expriesIn;
+    // localStorage.setItem("token",payload);
+    timeStorage.setItem("token",payload.token,payload.expriesIn);
+  },
+
+  // 删除token
+  removeToken(state,payload){
+    state.token='';
+    state.expriesIn=0;
+    timeStorage.removeItem("token");
+  },
+
+  // 得到token
+  getToken(state){
+    state.token=timeStorage.getItem("token");
   },
 
   // 设置引用状态

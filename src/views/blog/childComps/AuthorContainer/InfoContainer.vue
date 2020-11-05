@@ -16,7 +16,8 @@
 </template>
 
 <script>
-    import InfoItem from './InfoItem'
+    import InfoItem from './InfoItem';
+    // const InfoItem=()=>import("./InfoItem");
   export default {
     name: "InfoContainer",
     components:{

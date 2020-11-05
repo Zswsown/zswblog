@@ -1,10 +1,10 @@
 <template>
     <div class="blogItemInfo">
         <div class="time">{{blogCreateTime}}</div>
-        <div class="watch">
-            <img src="../../../../../assets/images/eye.svg" alt="">
-            <span>1</span>
-        </div>
+<!--        <div class="watch">-->
+<!--            <img src="../../../../../assets/images/eye.svg" alt="">-->
+<!--            <span>1</span>-->
+<!--        </div>-->
     </div>
 </template>
 
@@ -24,14 +24,13 @@
 
 <style scoped>
 .blogItemInfo{
-    height: 14px;
     margin:0 2px;
-
-    font-size:14px;
-    line-height:14px;
-
     display:flex;
 
+}
+
+.time{
+    font-size:0.78em;
 }
 
 .watch{
@@ -41,11 +40,11 @@
     .watch img{
         width: 14px;
         height:14px;
-        margin:0 2px;
+        margin-left:4px;
+        vertical-align: middle;
     }
     .watch span{
 
-        font-size:14px;
-        line-height:14px;
+        font-size: 0.78em;
     }
 </style>

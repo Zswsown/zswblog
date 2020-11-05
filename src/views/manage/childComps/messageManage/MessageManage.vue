@@ -17,6 +17,8 @@
     import MessageTable from './MessageTable';
     import Pagination from "../../../../components/common/pagination/Pagination";
 
+    // const MessageTable=()=>import("./MessageTable");
+    // const Pagination=()=>import("../../../../components/common/pagination/Pagination");
   export default {
     name: "MessageManage",
     components:{
@@ -75,13 +77,14 @@
             // 得到留言列表
             this.messageList=respond.data.result;
 
-            for(let i=0;i<this.messageList.length;i++){
-              // 在每一个留言数据后面添加对应的文章标题和文章id
-              for(let j=0;j<this.messageList[i].length;j++){
-                this.messageList[i][j].blog_title=res.data.result[i].blog_title;
-                this.messageList[i][j].blog_id=res.data.result[i].blog_id;
-              }
-            }
+            // for(let i=0;i<this.messageList.length;i++){
+            //   // 在每一个留言数据后面添加对应的文章标题和文章id
+            //   for(let j=0;j<this.messageList[i].length;j++){
+            //     this.messageList[i][j].blog_title=res.data.result[i].blog_title;
+            //     this.messageList[i][j].blog_id=res.data.result[i].blog_id;
+            //   }
+            // }
+            console.log(this.messageList);
 
             // 将二维数组转换成一维数组
             this.messageList=[].concat.apply([],this.messageList);
@@ -104,6 +107,7 @@
             }
             // 默认显示留言列表的第一个二维数组
             this.currentMessageList=this.messageList[0];
+            // console.log(this.currentMessageList);
             // console.log(this.messageList);
           })
         })
@@ -144,10 +148,14 @@
 </script>
 
 <style scoped>
+    #messageManage{
+        width: 100%;
+    }
 .messageTable{
-    width: 1370px;
-    max-width: 1370px;
-    max-height: 1000px;
+    /*width: 1370px;*/
+    width: 100%;
+    /*max-width: 1370px;*/
+    /*max-height: 1000px;*/
     background: rgba(255,255,255,.8);
     color: #000;
 }

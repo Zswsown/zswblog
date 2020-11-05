@@ -40,8 +40,9 @@
         justify-content: center;
         align-items:center;
 
-        font-size:16px;
+        /*font-size:16px;*/
         font-weight:700;
+        line-height: 44PX;
 
         height:100%;
         width:16%;
@@ -55,6 +56,6 @@
 
     .active{
         color:#7d3990;
-        font-size:18px;
+        font-size:1em;
     }
 </style>

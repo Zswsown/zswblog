@@ -4,7 +4,7 @@
             <tr>
                 <th class="select"></th>
                 <th>文章标题</th>
-                <th>留言作者</th>
+                <th class="author">留言作者</th>
                 <th>留言内容</th>
                 <th class="email">邮箱地址</th>
                 <th class="createtime">留言时间</th>
@@ -24,6 +24,9 @@
 <script>
     import MessageBlock from "./MessageBlock";
     import MessageBottom from "./MessageBottom";
+    // const MessageBlock=()=>import("./MessageBlock");
+    // const MessageBottom=()=>import("./MessageBottom");
+
     import {BASE_URL,api} from "../../../../common/const";
     import {$post} from "../../../../network/request";
 
@@ -55,6 +58,8 @@
     mounted() {
       // 事件总线监听MessageItem中发出的留言的复选框被点击时发出的事件
       this.$bus.$on('itemClick',this.selectStateChange);
+
+
     },
 
     methods:{
@@ -142,21 +147,26 @@
         else{
           this.$toast.show('未选中留言',2000);
         }
-      }
+      },
+
+
     },
   }
 </script>
 
 <style scoped>
     .messageTable{
+        width: 100%;
         border-collapse: collapse;
         border:1px solid #000;
-        font-size:18px;
+        font-size:1em;
     }
 
     th{
+        width:4em;
         border:1px solid #000;
         padding:6px 8px;
+        font-size: 1em;
     }
 
     .behavior{

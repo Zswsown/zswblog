@@ -29,17 +29,17 @@
 
 <style scoped>
     .replyInfoShow{
-        height:30px;
+        /*height:30px;*/
         padding: 6px 0;
     }
     .replyA,.replySpan{
         display: inline-block;
-        height:18px;
+        height:1em;
     }
     .replyCancle{
         vertical-align: middle;
-        width: 18px;
-        height:18px;
+        width: 1em;
+        height:1em;
         margin:0 2px;
     }
 </style>

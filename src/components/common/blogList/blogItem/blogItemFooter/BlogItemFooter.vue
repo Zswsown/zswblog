@@ -8,6 +8,9 @@
 <script>
     import BlogItemBehavior from "./BlogItemBehavior";
     import BlogItemInfo from "./BlogItemInfo";
+    // const BlogItemBehavior=()=>import("./BlogItemBehavior");
+    // const BlogItemInfo=()=>import("./BlogItemInfo");
+
   export default {
     name: "BlogFooter",
     props:{
@@ -36,6 +39,7 @@
     display: flex;
     justify-content: space-between;
     align-items:center;
-    padding-top: 1px;
+    margin-bottom: 6px;
+    font-size: 1em;
 }
 </style>

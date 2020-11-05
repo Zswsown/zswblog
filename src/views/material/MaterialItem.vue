@@ -27,19 +27,25 @@
 </script>
 
 <style scoped>
+
+    .materialItem a{
+        outline: none;
+        text-decoration:none;
+        color: #333;
+    }
 .materialItem{
-    margin: 0 16px 16px 0;
-    padding-top: 16px;
-    width: 112px;
-    height:112px;
+    margin:16PX;
+    padding-top: 16PX;
+    width: 112PX;
+    height:112PX;
     background: #fff;
-    border-radius: 6px;
-    box-shadow: 1px 1px 1px 1px #cccccc;
+    border-radius: 6PX;
+    box-shadow: 1PX 1PX 1PX 1PX #cccccc;
 }
 img{
-    margin:0 auto 24px;
-    width: 48px;
-    height:48px;
+    margin:0 auto 24PX;
+    width: 48PX;
+    height:48PX;
 }
 .materialItemImg{
     display: flex;
@@ -48,12 +54,18 @@ img{
     flex-direction: column;
 }
     .materialItemTitle{
-        width:88px;
-        height: 24px;
+        width:88PX;
+        height: 24PX;
+        font-size: 0.89em;
+        line-height: 0.89em;
 
         text-align: center;
         overflow:hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 </style>

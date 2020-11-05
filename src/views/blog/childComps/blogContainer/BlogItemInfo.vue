@@ -18,15 +18,18 @@
                       :editable="false"
                       :ishljs="true" ></mavon-editor>
         <message-list :message-list="messageList"></message-list>
-        <insert-message class="insertMessage" :blog-i-d="blogID" @insertMessageClick="insertMessageClick"></insert-message>
+        <insert-message class="insertMessage" :blog-i-d="blogID" :blog-title="getBlogTitle" @insertMessageClick="insertMessageClick"></insert-message>
     </div>
 </template>
 
 <script>
   import {$post,$get} from "../../../../network/request";
+  import {BASE_URL,api} from "../../../../common/const";
   import InsertMessage from "../../../../components/common/message/insert/InsertMessage";
   import MessageList from "../../../../components/common/message/MessageList";
-  import {BASE_URL,api} from "../../../../common/const";
+
+  // const InsertMessage=()=>import("./BlogItemInfo");
+  // const MessageList=()=>import("../../../../components/common/message/MessageList");
   export default {
     name: "BlogItemInfo",
     components:{
@@ -36,6 +39,7 @@
     data(){
       return{
         blogID:1,
+        blogTitle:'',
         blogContent:'',
         messageList:[],
         watchSum:0,
@@ -49,6 +53,11 @@
 
       this.getWatchSum();
     },
+    computed:{
+      getBlogTitle(){
+        return this.blogTitle;
+      }
+    },
     methods:{
       // 请求信息，先请求博客内容，再渲染留言列表
       async getInfo(id){
@@ -60,6 +69,7 @@
       getBlogInfo(id){
         $post(BASE_URL+api.SELECT_BLOG,{blog_id:id})
           .then(res=>{
+            this.blogTitle=res.data.result[0].blog_title;
             this.blogContent=res.data.result[0].blog_content;
           });
       },
@@ -102,7 +112,7 @@
     /*}*/
 
     .blogItemInfo{
-        height: 1010px;
+        /*height: 1010px;*/
         width: 1030px;
         margin-right: 30px;
         margin-bottom: 10px;
@@ -110,6 +120,13 @@
         overflow-y: scroll;
         background: #ffffff;
         border-radius: 10px;
+    }
+
+    @media screen and (max-width:750px){
+        .blogItemInfo{
+            width: 100%;
+            margin:0 20px 10px 20px;
+        }
     }
 
     .blogItemInfo::-webkit-scrollbar {/*滚动条整体样式*/
@@ -132,7 +149,7 @@
         min-height: 300px;
         min-width: 300px;
         border: none;
-        z-index: 1500;
+        z-index: 1;
     }
     .insertMessage{
         margin:20px auto;

@@ -10,6 +10,9 @@
 <script>
   import EditorTitle from "./EditorTitle";
   import Editor from "./Editor";
+
+  // const EditorTitle=()=>import("./EditorTitle");
+  // const Editor=()=>import("./Editor");
   export default {
     name: "EditorManage",
     data(){
@@ -50,6 +53,6 @@
 
     .editor{
         width:100%;
-        height:100%;
+        height:calc(100% - 76PX);
     }
 </style>

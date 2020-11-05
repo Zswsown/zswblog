@@ -52,15 +52,15 @@
     display:flex;
     justify-content: space-around;
     align-items:center;
-    height: 14px;
-    width:160px;
+    /*height: 14px;*/
+    /*width:160px;*/
 
-    font-size:14px;
-    line-height:14px;
+    font-size:0.78em;
+
 }
     .behavior{
-        width: 40px;
-        height:100%;
+        font-size: 0.78em;
+        margin-right: 10px;
     }
 
     .behavior:hover{

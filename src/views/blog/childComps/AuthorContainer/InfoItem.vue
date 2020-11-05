@@ -19,11 +19,11 @@
         align-items: center;
     }
     .itemTitle{
-        font-size:16px;
+        font-size:0.89em;
         font-weight:700;
     }
     .itemNum{
-        font-size:18px;
+        font-size:1em;
         font-weight:700;
         color: #000;
     }

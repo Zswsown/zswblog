@@ -24,12 +24,14 @@
 </script>
 
 <style scoped>
-    .blogMenuItem{
-        height:45px;
-        width:100%;
+    .blogMenuItem {
+        /*height: 45px;*/
+        width: 100%;
         text-align: center;
-        line-height: 45px;
-        font-size:16px;
+        padding: 6px;
+        line-height: 1em;
+        font-size: 1em;
         border-bottom: 1px solid #ccc;
     }
+
 </style>

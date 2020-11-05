@@ -8,6 +8,8 @@
 <script>
     import BlogMenu from "./BlogMenu";
     import MaterialMenu from "./MaterialMenu";
+    // const BlogMenu=()=>import("./BlogMenu");
+    // const MaterialMenu=()=>import("./MaterialMenu");
   export default {
     name: "TabMenu",
     components:{
@@ -19,7 +21,6 @@
 
 <style scoped>
     #tabMenu{
-
         display: flex;
         flex-direction:column;
         align-items:center;

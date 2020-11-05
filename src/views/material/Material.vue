@@ -6,6 +6,7 @@
 
 <script>
     import MaterialList from "./MaterialList";
+    // const MaterialList=()=>import("./MaterialList");
     import {$get} from '../../network/request';
     import {BASE_URL,api} from "../../common/const";
 
@@ -43,5 +44,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    width:1920px;
+    /*height: 1020px;*/
+    height: calc(100vh - 60PX);
+    margin-top:60PX;
 }
 </style>

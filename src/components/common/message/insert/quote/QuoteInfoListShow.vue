@@ -8,6 +8,7 @@
 
 <script>
     import QuoteInfoShow from "./QuoteInfoShow";
+    // const QuoteInfoShow=()=>import('./QuoteInfoShow');
   export default {
     name: "QuoteInfoListShow",
     components:{

@@ -1,7 +1,9 @@
 <template>
     <div class="blogItem" @click="itemClick">
         <div class="blogTitle">{{blogItem.blog_title}}</div>
-        <div class="blogContent">{{blogItem.blog_text_content}}</div>
+        <div class="blogContent">
+            <p>{{blogItem.blog_text_content}}</p>
+        </div>
         <div class="blogInfo">{{getFomateTime}}</div>
     </div>
 </template>
@@ -26,7 +28,7 @@
     },
     methods:{
       itemClick(){
-        this.$router.push('/blog/blogItemInfo/'+this.blogItem.blog_id);
+        this.$router.push('/blogInfo/'+this.blogItem.blog_id);
       }
     }
   }
@@ -34,11 +36,12 @@
 
 <style scoped>
     .blogItem{
-        height:92px;
-        margin-bottom:10px;
-        width:1020px;
+        margin-bottom:20px;
+        /*width:1020px;*/
+        width:100%;
         background: #fff;
         border-radius:20px;
+        padding: 4px 0;
         /*box-shadow: 2px 2px 2px 2px #eeeeee;*/
         border:2px solid transparent;
     }
@@ -46,24 +49,25 @@
         border:2px solid #7d3990;
     }
     .blogTitle{
-        height:20px;
-        width:100%;
+        margin-bottom: 10px;
+        /*width:1000px;*/
+        width: calc(100% - 20px);
         background: #fff;
         border-radius:20px 20px 0 0;
         padding:0 10px;
 
-        font-size: 18px;
-        line-height:20px;
+
+        font-size: 1em;
+        /*line-height:18px;*/
         font-weight:600;
     }
     .blogContent{
-        height:48px;
-        margin-top: 4px;
-        line-height: 16px;
-        width:100%;
+        /*height:48px;*/
+        margin-bottom: 10px;
+        font-size: 0.89em;
         /*background: #42b983;*/
         padding:0 10px;
-
+        vertical-align: middle;
         /*省略号*/
         overflow:hidden;
         text-overflow:ellipsis;
@@ -71,15 +75,19 @@
         -webkit-line-clamp:3;
         -webkit-box-orient: vertical;
     }
+    .blogContent p{
+        margin: 0;
+    }
+
     .blogInfo{
-        height: 14px;
-        width:100%;
-        margin-top: 2px;
+
+        /*width:1000px;*/
+        width: calc(100% - 20px);
+        margin-bottom: 6px;
         /*background: yellow;*/
         border-radius:0 0 20px 20px;
-        padding:0 10px;
+        padding:0 10px 6px 10px;
 
-        font-size:14px;
-        line-height:14px;
+        font-size:.78em;
     }
 </style>

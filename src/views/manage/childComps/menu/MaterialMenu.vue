@@ -5,12 +5,13 @@
             <span>资料管理</span>
         </div>
         <material-menu-item class="tabItem" path="/manage/materialManage" >
-            <div slot="tabName">链接管理</div>
+            <div class="tabName" slot="tabName">链接管理</div>
         </material-menu-item>
     </div>
 </template>
 
 <script>
+  // const MaterialMenuItem=()=>import("./MaterialMenuItem");
   import MaterialMenuItem from "./MaterialMenuItem";
   export default {
     name: "MaterialMenu",
@@ -21,6 +22,19 @@
 </script>
 
 <style scoped>
+    @media screen and (max-width:750px){
+        .tabName{
+            width: 5em;
+        }
+        .tabItem{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        span{
+            width: 5em;
+        }
+    }
     #materialMenu{
         display: flex;
         flex-direction:column;
@@ -32,10 +46,11 @@
         border-radius: 20px;
     }
     .tabTitle{
-        height:45px;
+        /*height:45px;*/
         width:100%;
+        margin: 4px 0;
 
-        font-size:16px;
+        font-size:1em;
         font-weight:700;
         display: flex;
         justify-content: center;
@@ -51,5 +66,6 @@
 
     .tabItem{
         border-bottom: 1px solid transparent;
+        margin: 4px 0;
     }
 </style>

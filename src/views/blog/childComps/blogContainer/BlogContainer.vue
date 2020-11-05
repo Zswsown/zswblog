@@ -1,11 +1,13 @@
 <template>
-    <div class="blogContainer">
-        <blog-list :blog-list="getCurrentBlogList"></blog-list>
+    <div id="blogContainer">
+        <blog-list class="blogList" :blog-list="getCurrentBlogList"></blog-list>
         <pagination :default-page-size="size" :total="getBlogSum" @change="pageChange"></pagination>
     </div>
 </template>
 
 <script>
+  // const BlogList=()=>import("./BlogList");
+  // const Pagination=()=>import("../../../../components/common/pagination/Pagination");
     import BlogList from './BlogList';
     import Pagination from '../../../../components/common/pagination/Pagination';
 
@@ -69,9 +71,19 @@
 </script>
 
 <style scoped>
-    .blogContainer{
-        width:1060px;
-        height:calc(100vh - 60px);
+    #blogContainer{
+        width:1000px;
         padding:0 10px;
+    }
+
+    @media screen and (max-width:750px){
+        #blogContainer{
+            width: 100%;
+            height: 100%;
+            margin: 0 40px;
+        }
+        .blogList{
+            background: #f4f4f4;
+        }
     }
 </style>

@@ -11,6 +11,8 @@
 
     import BlogList from "../../../../components/common/blogList/BlogList";
     import Pagination from "../../../../components/common/pagination/Pagination";
+    // const BlogList=()=>import("../../../../components/common/blogList/BlogList");
+    // const Pagination=()=>import("../../../../components/common/pagination/Pagination");
     const SERVER=require('../../../../server/common/const');
   export default {
     name: "BlogManage",
@@ -47,14 +49,14 @@
     activated() {
       // 当添加文章成功后，会跳转到该页面，但是因为blogManage是博客管理的默认页面，已经被created过了，所以只能在活跃后重新请求一次数据
       this.getBlogList();
-      console.log('回来了');
+      // console.log('回来了');
     },
     deactivated() {
-      console.log('离开了');
+      // console.log('离开了');
     },
     watch:{
       blogList:function (newValue,oldValue) {
-        console.log(newValue);
+        // console.log(newValue);
       }
     },
     mounted() {
@@ -68,7 +70,7 @@
         $get(SERVER.BASE_URL+SERVER.api.SELECT_BLOGS).then(res=>{
           // 得到文章列表
           this.blogList=res.data.result;
-          console.log(this.blogList);
+          // console.log(this.blogList);
 
           this.blogSum=this.blogList.length;
           // 将文章列表分割成想要尺寸的数组
@@ -88,14 +90,32 @@
 
 <style scoped>
     .blogManager{
-        height:1080px;
-        width:1368px;
+        /*width:1368px;*/
+        width: 100%;
     }
 
     .blogList{
-        height: 864px;
-        width: 1368px;
+        /*height: 864px;*/
+        /*width: 1368px;*/
+        width: 100%;
         border-radius: 10px;
         background: rgba(255,255,255,0);
+    }
+
+    .blogManager::-webkit-scrollbar {/*滚动条整体样式*/
+        width: 4px;     /*高宽分别对应横竖滚动条的尺寸*/
+        height: 4px;
+        scrollbar-arrow-color:#ccc;
+    }
+    .blogManager::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+        border-radius: 5px;
+        -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+        background: rgba(0,0,0,0.1);
+        scrollbar-arrow-color:#fff;
+    }
+    .blogManager::-webkit-scrollbar-track {/*滚动条里面轨道*/
+        -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+        border-radius: 0;
+        background: rgba(0,0,0,0.1);
     }
 </style>

@@ -17,16 +17,17 @@
                       :toolbarsFlag="false"
                       :editable="false"
                       :ishljs="true" ></mavon-editor>
-        <message-list :message-list="messageList"></message-list>
+        <message-list :message-list="messageList" class="messageList"></message-list>
 <!--        <insert-message class="insertMessage" :blog-i-d="blogID" @insertMessageClick="insertMessageClick"></insert-message>-->
     </div>
 </template>
 
 <script>
   import {$post} from "../../../../network/request";
+  import {BASE_URL,api} from "../../../../common/const";
   // import InsertMessage from "../../message/insert/InsertMessage";
   import MessageList from "../../message/MessageList";
-  import {BASE_URL,api} from "../../../../common/const";
+  // const MessageList=()=>import("../../message/MessageList");
 
   export default {
     name: "BlogInfo",
@@ -80,10 +81,9 @@
 
 <style scoped>
     .blogInfo{
-        height: 1080px;
-        width: 1368px;
-        padding:0 60px;
-        overflow-y: scroll;
+        /*height: 1080px;*/
+        /*width: 1368px;*/
+        width: 100%;
         background: #ffffff;
         border-radius: 10px;
     }
@@ -109,9 +109,12 @@
     min-height: 300px;
     min-width: 300px;
     border: none;
-    z-index: 1500;
+    z-index: 1;
 }
     /*.insertMessage{*/
     /*    margin:20px auto;*/
     /*}*/
+    .messageList{
+        padding: 0 25px;
+    }
 </style>

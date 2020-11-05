@@ -1,5 +1,5 @@
 <template>
-    <tr class="messageItem">
+    <tr class="messageItem" ref="tr">
         <!--        复选框-->
         <td class="select">
             <input :checked="getSelectState" ref="select" type="checkbox" name="messageSelect" @click="itemClick">
@@ -9,7 +9,7 @@
             {{messageItem.blog_title}}
         </td>
         <!--        留言作者-->
-        <td>
+        <td ref="message_author">
             {{messageItem.message_author}}
         </td>
         <!--        留言内容-->
@@ -18,7 +18,8 @@
         </td>
         <!--        留言作者邮箱-->
         <td>
-            <input ref="message_author_email" class="message_author_email" type="text" :value="messageItem.message_author_email">
+<!--            <input ref="message_author_email" class="message_author_email" type="text" :value="messageItem.message_author_email">-->
+            <textarea ref="message_author_email" class="message_author_email">{{messageItem.message_author_email}}</textarea>
         </td>
         <!--        留言创建时间-->
         <td class="createtime">
@@ -52,9 +53,13 @@
             isBlogTitleShow:false,
             // 跨行合并单元格个数
             rowspanNum:0,
+            textareaHeight:document.getElementsByTagName("td")[1].offsetHeight,
           }
       },
-
+        mounted() {
+          // 监听屏幕尺寸改变时文本框的高度也发生相应改变，防止生成滚动条
+          this.$bus.$on('resizeTdHeight',this.resizeTdHeight);
+        },
       computed:{
           // 得到当前留言的当选框的状态
           getSelectState(){
@@ -103,6 +108,20 @@
           // 因为mysql中没有boolean类型，只能用数字0代表false，数字1代表true，点击后进行取反（发送事件给MessageTable中的事件总线监听到）
           this.messageItem.message_selected=this.messageItem.message_selected===0?1:0;
           this.$bus.$emit('itemClick');
+        },
+        resizeTdHeight(){
+          // console.log(222);
+          if(this.$refs.message_author_email!==undefined){
+            if(this.$refs.message_author_email.clientHeight<this.$refs.message_author_email.scrollHeight){
+              if(this.$refs.message_author_email.scrollHeight>this.$refs.tr.clientHeight){
+                this.$refs.message_author_email.style.height=this.$refs.message_author_email.scrollHeight+'px';
+              }
+              else{
+                this.$refs.message_author_email.style.height=this.$refs.tr.offsetHeight+'px';
+              }
+
+            }
+          }
         }
       }
   }
@@ -111,14 +130,16 @@
 <style scoped>
     .delete,.reply{
         display:inline-block;
-        width:100px;
-        height:40px;
+        width:3em;
         margin:0 8px;
 
         border-radius: 5px;
         border:1px solid #ccc;
         color: #fff;
         background: #7d3990;
+        font-size: 1em;
+        line-height: 1em;
+        padding: 6px;
     }
 
     .delete:focus,.reply:focus{
@@ -130,6 +151,11 @@
         border:1px solid #000;
         padding:6px 8px;
         text-align: center;
+        font-size: 1em;
+    }
+
+    td input{
+        font-size: 1em;
     }
 
     .behavior{
@@ -153,5 +179,9 @@
         padding: 0;
         margin: 0;
         text-align: center;
+        resize: none;
+        display: inline-block;
+        width: 100%;
+        font-size: 1em;
     }
 </style>

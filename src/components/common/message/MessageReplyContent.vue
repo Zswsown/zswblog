@@ -34,4 +34,8 @@
 .messageReplyContent a{
     color:blue;
 }
+p{
+    margin: 0;
+    padding: 0;
+}
 </style>

@@ -3,9 +3,13 @@ const path=require('path')
 const bodyParser=require('body-parser');
 const formidable=require('formidable');
 const cookieParser=require('cookie-parser');
+const jwt=require('jsonwebtoken');
+const expressJwt=require('express-jwt');
+
 const app=express();
 
 const SERVER =require('./common/const');
+const config=require('./common/config');
 
 const common=require('./common/MD5');
 
@@ -23,9 +27,10 @@ app.use(cookieParser());
 
 //设置跨域请求
 app.all('*', function (req, res, next) {
+  //console.log(req.headers.origin);
   // 因为要保存cookie，所以这里的origin不能用'*'
-  res.header("Access-Control-Allow-Origin", "http://localhost:8080");
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
+  res.header("Access-Control-Allow-Origin", req.headers.origin);
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With');
   res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header("X-Powered-By", '3.2.1')
@@ -54,9 +59,48 @@ var pool=mysql.createPool({
   connectionLimit:100,
 });
 
+app.use(expressJwt({
+  algorithms: ['HS256'],
+  secret:config.secret,
+}).unless({
+  path:[
+    "/api/login",
+    '/api/getBlogList',
+    "/api/insertImages",
+    "/api/selectMessage",
+    "/api/insertMessage",
+    "/api/updateMessage",
+    '/api/insertQuoteMessage',
+    '/api/selectQuoteMessage',
+    '/api/insertReplyMessage',
+    '/api/selectReplyMessage',
+    '/api/selectMessageList',
+    '/api/getMessageList',
+    '/api/getWatchSum',
+    '/api/updateWatchSum',
+    '/api/selectMaterialList',
+  ]
+}))
+
+// 如果express-jwt解析token出错，中间件会抛出UnauthorizedError错误
+app.use((err,req,res,next)=>{
+  // 当token验证失败时会抛出如下错误
+  console.log(err);
+  if(err.name==='UnauthorizedError'){
+    // console.log('无效token');
+    res.status(401).send({
+      status:'fail',
+      message:'身份校验过期，请重新登录'
+    })
+  }
+})
+
 app.get('/api/getBlogList',(req,res)=>{
   let selectSql='SELECT * FROM blogs';
+  console.log(pool);
   pool.getConnection((err,connection)=>{
+    if(err) throw err;
+    console.log(connection);
     connection.query(selectSql,(err,result)=>{
       // 释放数据库连接
       connection.release();
@@ -66,7 +110,7 @@ app.get('/api/getBlogList',(req,res)=>{
         return;
       }
 
-      console.log('---SELECT---');
+      console.log('---SELECT BLOGLIST---');
       console.log('SELECT ID:',result);
       console.log('-----');
       res.send({result});
@@ -83,12 +127,12 @@ app.post('/api/selectBlog',(req,res)=>{
       connection.release();
 
       if(err){
-        console.log('[SELECT ERROR] - '+err.message);
+        console.log('[SELECT BLOG ERROR] - '+err.message);
         return;
       }
 
-      console.log('---SELECT---');
-      console.log('SELECT ID:',result);
+      console.log('---SELECT BLOG---');
+      console.log('SELECT BLOG ID:',result);
       console.log('-----');
       res.send({result});
     });
@@ -141,6 +185,8 @@ app.post('/api/updateBlog',(req,res)=>{
   var modSqlParams=[req.body.blog_title,req.body.blog_content,req.body.blog_text_content,req.body.blog_createtime,req.body.blog_id];
   pool.getConnection((err,connection)=>{
     connection.query(modSql,modSqlParams,(err,result)=>{
+      // 释放数据库连接
+      connection.release();
       if(err){
         console.log('UPDATE ERROR -',err.message);
       }
@@ -156,6 +202,8 @@ app.post('/api/selectMessage',(req,res)=>{
 
   pool.getConnection((err,connection)=>{
     connection.query(selectSql,(err,result)=>{
+      // 释放数据库连接
+      connection.release();
       if(err){
         console.log('----SELECT MESSAGE ERROR----');
         console.log(err.message);
@@ -214,12 +262,45 @@ app.post('/api/loginCheck',(req,res)=>{
   }
 })
 
+app.post('/api/login',(req,res)=>{
+  if(req.body.code===SERVER.ROOT_CODE && req.body.password===SERVER.ROOT_PASSWORD){
+    let expriesIn=0;
+    //isKeepState是登录框中是否选中“十天免登录的状态”,是的话，过期时间为10天
+    if(req.body.isKeepState){
+      expriesIn=config.keepStateExpiresIn
+    }
+    // 未选中的话，过期时间为30分钟
+    else{
+      expriesIn=config.expiresIn;
+    }
+
+    console.log(expriesIn);
+    //jwt.sign用于生成token
+    let token = jwt.sign({
+        name:req.body.userName,//自定义要进行加密的payload
+      },
+      config.secret,//自定义密钥
+      {
+        expiresIn: expriesIn,//过期时间
+      })
+    //将token发送给客户端，在客户端中的localStorage进行保存
+    res.status(200).send({
+      token:token,
+      expriesIn:expriesIn,
+    })
+  }
+  else{
+    res.status(401).send({esg:'fail'});
+  }
+})
+
 app.post('/api/insertMessage',(req,res)=>{
   let addSql='INSERT INTO messages(' +
-    'blog_id,message_author,message_content,message_createtime,message_author_email,message_selected) ' +
-    'VALUES (?,?,?,?,?,?)';
+    'blog_id,blog_title,message_author,message_content,message_createtime,message_author_email,message_selected) ' +
+    'VALUES (?,?,?,?,?,?,?)';
   let addParams=[
     req.body.blogID,
+    req.body.blogTitle,
     req.body.messageAuthor,
     req.body.messageContent,
     req.body.messageCreateTime,

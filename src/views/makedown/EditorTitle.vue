@@ -42,8 +42,8 @@
 
 <style scoped>
     .editorTitle{
-        height: 50px;
-        padding: 0 20px;
+        /*height: 50px;*/
+        padding:10px 20px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -51,23 +51,26 @@
         border-radius: 10px 10px 0 0 ;
     }
     .h{
-        width:100px;
+        font-size: 1em;
     }
     .publish{
-        width:100px;
-        height:40px;
+        padding: 4px;
+        /*height:40px;*/
         border-radius: 5px;
         border:1px solid #ccc;
-
+        font-size: 1em;
+        line-height: 1em;
         background: #7d3990;
+        color: #ffffff;
     }
     #title{
         flex: 1;
-        height: 40px;
-        font-size: 18px;
+        /*height: 40px;*/
+        font-size: 1em;
+        height:2em;
         margin:0 10px;
         border: 1px solid #ccc;
         border-radius: 5px;
-        padding: 10px;
+        padding: 0 10px;
     }
 </style>

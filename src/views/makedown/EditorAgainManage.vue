@@ -11,6 +11,9 @@
 <script>
   import EditorAgain from "./EditorAgain";
   import EditorTitle from "./EditorTitle";
+  // const EditorAgain=()=>import("./EditorAgain");
+  // const EditorTitle=()=>import("./EditorTitle");
+
   import {$post} from "../../network/request";
   import {api, BASE_URL} from "../../common/const";
 

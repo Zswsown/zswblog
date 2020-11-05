@@ -11,6 +11,7 @@
 </template>
 
 <script>
+  // const MessageList=()=>import("./MessageList");
     import MessageList from './MessageList';
     import {$get} from '../../../../network/request';
     import {BASE_URL,api} from '../../../../common/const';
@@ -48,7 +49,8 @@
 
 <style scoped>
     .messageContainer{
-        flex:1;
+        width: 460px;
+        height: 600px;
         padding: 10px;
         border-radius:20px;
         background: #fff;
@@ -66,7 +68,7 @@
         height:24px;
     }
     .title{
-        font-size:18px;
+        font-size:1em;
         line-height: 18px;
         font-weight: 700;
         margin-bottom:4px;

@@ -8,6 +8,7 @@
 
 <script>
     import MessageItem from './MessageItem';
+    // const MessageItem=()=>import("./MessageItem");
   export default {
     name: "MessageList",
     components:{
@@ -25,5 +26,7 @@
 </script>
 
 <style scoped>
-
+ul{
+    padding: 0;
+}
 </style>

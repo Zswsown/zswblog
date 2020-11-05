@@ -1,16 +1,19 @@
 <template>
     <div id="pagination">
         <!--        前一页按钮-->
-        <input class="btn-prev" type="button" value="<" @click="setPage(current-1)">
+        <img class="btn-prev" src="../../../assets/images/prev.svg" alt="上一页" @click="setPage(current-1)">
+<!--        <input class="btn-prev" type="button" value="<" @click="setPage(current-1)">-->
         <!--        分页器-->
         <pager :total-page="totalPage" :default-current-page="current" @change="pageChange"></pager>
         <!--        后一页按钮-->
-        <input class="btn-next" type="button" value=">" @click="setPage(current+1)">
+        <img class="btn-next" src="../../../assets/images/next.svg" alt="下一页" @click="setPage(current+1)">
+<!--        <input class="btn-next" type="button" value=">" @click="setPage(current+1)">-->
     </div>
 </template>
 
 <script>
     import Pager from "./Pager";
+    // const Pager=()=>import("./Pager");
   export default {
     name: "Pagination",
     components:{
@@ -78,25 +81,20 @@
 
 <style scoped>
     #pagination{
-        margin:20px auto;
+
         display: flex;
         justify-content: center;
         align-items:center;
     }
 .btn-prev, .btn-next{
-    width:30px;
-    height:30px;
-    line-height: 30px;
-    margin:0 8px 0 0;
-    padding:0 6px;
-    text-align: center;
-    border:1px solid #d9d9d9;
-    border-radius:2px;
-    background: #fff;
+    display: block;
+    width:1.5em;
+    height:1.5em;
+    margin:0 8PX 0 0;
 }
 
-    .btn-prev:focus, .btn-next:focus{
-        border:1px solid #d9d9d9;
-        outline: none;
-    }
+    /*.btn-prev:focus, .btn-next:focus{*/
+    /*    border:1px solid #d9d9d9;*/
+    /*    outline: none;*/
+    /*}*/
 </style>

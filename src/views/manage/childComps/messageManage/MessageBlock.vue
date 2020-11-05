@@ -11,6 +11,7 @@
     import {$get,$post,$axios} from '../../../../network/request';
     import {BASE_URL,api} from '../../../../common/const';
     import MessageItem from './MessageItem';
+    // const MessageItem=()=>import("./MessageItem");
   export default {
     name: "MessageBlock",
     components:{

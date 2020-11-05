@@ -3,30 +3,40 @@
         <!--        首页-->
         <li class="number"
             :class="{active: this.current===1}"
-            @click="setPage(1)">1</li>
+            @click="setPage(1)">
+            <a>1</a>
+        </li>
 
         <!--        左边更多-->
         <li class="more left"
             v-if="totalPage>centerSize+2 && current-centerSize/2-1>1"
-            @click="setPage(current-jumpSize)">...</li>
+            @click="setPage(current-jumpSize)">
+            <a>...</a>
+        </li>
 
         <!--        中间页码-->
         <li class="number"
             v-for="(page,index) in centerPages"
             :class="{active: current===page}"
             :key="index"
-            @click="setPage(page)">{{ page }}</li>
+            @click="setPage(page)">
+            <a>{{ page }}</a>
+        </li>
 
         <!--        右边更多-->
         <li class="more right"
             v-if="totalPage>centerSize+2 && current+centerSize/2+1<totalPage"
-            @click="setPage(current+jumpSize)">...</li>
+            @click="setPage(current+jumpSize)">
+            <a>...</a>
+        </li>
 
         <!--        最后一页-->
         <li class="number"
-            v-if="totalPage!==1"
+            v-if="totalPage!==1 && totalPage!==0"
             :class="{active: this.current=== totalPage}"
-            @click="setPage(totalPage)">{{ totalPage }}</li>
+            @click="setPage(totalPage)">
+            <a>{{ totalPage }}</a>
+        </li>
     </ul>
 </template>
 
@@ -120,22 +130,33 @@
 <style scoped>
     ul{
         list-style: none;
-        height: 32px;
+        height: 1.5em;
+        padding: 0;
+
     }
  ul li{
+     color: #262626;
      float: left;
-     width:30px;
-     height:30px;
-     line-height: 30px;
-     margin:0 8px 0 0;
-     padding:0 6px;
+     width:1.5em;
+     height:1.5em;
+
+     /*line-height: 30px;*/
+     margin:0 8PX 0 0;
+     /*padding:0 6PX;*/
      text-align: center;
-     border:1px solid #d9d9d9;
-     border-radius:2px;
+     border:1PX solid #d9d9d9;
+     box-sizing: border-box;
+     border-radius:2PX;
      background: #fff;
  }
+
+ ul li a{
+     font-size: 1em;
+     line-height: 1em;
+ }
+
     .active{
-        border:1px solid #7d3990;
+        border:1PX solid #7d3990;
     }
 
     .more left:hover, .more right:hover{

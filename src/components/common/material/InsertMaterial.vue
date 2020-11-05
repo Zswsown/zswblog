@@ -120,18 +120,18 @@
 
 
     .materialForm{
-        width: 422px;
-        margin: 10px auto;
+        width: 100%;
+        /*margin: 10px auto;*/
         border-radius: 16px;
         box-shadow: 2px 2px 2px 2px #eee;
     }
 
-    input{
+    input[type="url"],input[type="text"],input[type="file"]{
         display:inline-block;
         width:400px;
         height:40px;
         padding: 4px;
-
+        font-size: 1em;
         border-radius: 6px;
         border:1px solid #ccc;
         margin:0 10px 6px 10px;
@@ -139,9 +139,6 @@
 
     input[type="submit"]{
         display:inline-block;
-        width:100px;
-        height:40px;
-
         border-radius: 6px;
         border:1px solid #ccc;
         background: #7d3990;
@@ -162,15 +159,16 @@
 
     .urlIcon label{
         display:inline-block;
-        width:100px;
-        height:40px;
+        /*width:100px;*/
+        /*height:40px;*/
+        padding:6px;
 
         border-radius: 6px;
         border:1px solid #ccc;
         background: #7d3990;
         color: #fff;
         text-align: center;
-        line-height: 40px;
+
         overflow: hidden;
         margin:0 10px 6px 10px;
     }
@@ -181,10 +179,17 @@
         vertical-align: top;
         margin: 10px 10px 0 0;
     }
+    p{
+        padding: 0;
+        margin: 0;
+    }
 
     .materialFormFooter p{
         text-align: center;
+        padding: 10px 0;
+        margin:0;
     }
+
 
     h3{
         margin:0 10px 6px 10px;

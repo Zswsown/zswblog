@@ -6,6 +6,7 @@
 
 <script>
   import Introduce from "./Introduce";
+  // const Introduce=()=>import("./Introduce");
   export default {
     name: "Index",
     components:{
@@ -19,10 +20,20 @@
 
 <style scoped>
     #index{
-        width:1536px;
-        height:100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        margin-top: 60PX;
+        height: calc(100vh - 60PX);
+        width:1920px;
+
+        background:#ffffff url("../../assets/images/loginBackground.jpg") no-repeat fixed center;
+        background-size: cover;
+    }
+
+
+
+    @media screen and (max-width:750px){
+        #index{
+            background-size: 750px 1274px;
+            background:#ffffff url("../../assets/images/m_background.jpg") no-repeat fixed center;
+        }
     }
 </style>

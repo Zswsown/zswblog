@@ -4,20 +4,21 @@
             <img src="../../../../assets/images/blogmanage.svg" alt="">
             <span>博客管理</span>
         </div>
-        <blog-menu-item path="/manage/blogManage" >
-            <div slot="tabName">文章管理</div>
+        <blog-menu-item class="tabItem1" path="/manage/blogManage" >
+            <div class="tabName" slot="tabName">文章管理</div>
         </blog-menu-item>
-        <blog-menu-item path="/manage/messageManage">
-            <div slot="tabName">评论管理</div>
+        <blog-menu-item class="tabItem1" path="/manage/messageManage">
+            <div class="tabName" slot="tabName">评论管理</div>
         </blog-menu-item>
         <blog-menu-item  class="tabItem" path="/manage/editorManage">
-            <div slot="tabName">发布文章</div>
+            <div class="tabName" slot="tabName">发布文章</div>
         </blog-menu-item>
     </div>
 </template>
 
 <script>
     import BlogMenuItem from "./BlogMenuItem";
+    // const BlogMenuItem=()=>import("./BlogMenuItem");
   export default {
     name: "BlogMenu",
     components:{
@@ -27,6 +28,20 @@
 </script>
 
 <style scoped>
+    @media screen and (max-width:750px){
+       .tabName{
+           width: 5em;
+       }
+        .tabItem,.tabItem1{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        span{
+            width: 5em;
+        }
+    }
+
     #blogMenu{
         display: flex;
         flex-direction:column;
@@ -39,10 +54,11 @@
         margin-bottom: 20px;
     }
     .tabTitle{
-        height:45px;
+        /*height:45px;*/
         width:100%;
+        margin: 4px 0;
 
-        font-size:16px;
+        font-size:1em;
         font-weight:700;
         display: flex;
         justify-content: center;
@@ -58,5 +74,10 @@
 
     .tabItem{
         border-bottom: 1px solid transparent;
+        margin: 4px 0;
+    }
+
+    .tabItem1{
+        margin: 4px 0;
     }
 </style>

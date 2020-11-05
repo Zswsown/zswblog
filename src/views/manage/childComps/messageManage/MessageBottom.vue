@@ -75,9 +75,11 @@
 
     .delete{
         display:inline-block;
-        width:100px;
-        height:40px;
+        width:3em;
         margin:0 8px;
+        font-size: 1em;
+        line-height: 1em;
+        padding: 6px;
 
         border-radius: 5px;
         border:1px solid #ccc;

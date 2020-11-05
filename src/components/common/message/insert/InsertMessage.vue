@@ -49,6 +49,8 @@
 
     import ReplyInfoShow from "./reply/ReplyInfoShow";
     import QuoteInfoListShow from "./quote/QuoteInfoListShow";
+    // const ReplyInfoShow=()=>import('./reply/ReplyInfoShow');
+    // const QuoteInfoListShow=()=>import('./quote/QuoteInfoListShow');
 
     export default {
     name: "InsertMessage",
@@ -74,6 +76,16 @@
       },
       props:{
         blogID:String,
+        blogTitle: String,
+      },
+      watch:{
+        blogTitle:function (newValue,oldValue) {
+            this.blogTitle=newValue;
+        }
+      },
+      created() {
+        console.log(this.blogID);
+        console.log(this.blogTitle);
       },
       computed:{
         // 计算属性监控vuex中的回复留言的数据是否为空，不为空的话证明其点了回复，则显示@的内容，如果为空则不显示
@@ -92,6 +104,7 @@
 
           $post(BASE_URL + api.INSERT_MESSAGE, {
             blogID: this.blogID,
+            blogTitle:this.blogTitle,
             messageAuthor: this.messageAuthor,
             messageContent: this.messageContent,
             messageCreateTime: this.messageCreateTime,
@@ -165,40 +178,50 @@
 .insertMessage{
 
     /*height: 544px;*/
-    width:940px;
+    /*width:940px;*/
+    width: 100%;
     background:#fff;
     border-radius: 16px;
     box-shadow: 2px 2px 2px 2px #eee;
 }
+    h2,label,p{
+        margin: 0;
+        padding: 0;
+        font-size: 1.1em;
+        line-height: 1.1em;
+    }
+
     .h{
+        padding: 10px 0;
         font-weight: 500;
-        height:50px;
-        line-height:50px;
-        width:920px;
+        /*height:50px;*/
+        /*line-height:50px;*/
+        width:calc(100% - 20px);
         margin:0 10px;
         background:#fff;
         border-bottom:1px solid #eee;
     }
     label{
         display: block;
-        line-height: 30px;
+        font-size: 1em;
+        line-height: 1em;
         font-weight:600;
-       height:30px;
-        padding:1px 0;
+       /*height:30px;*/
+        padding:10px 0;
     }
     .messageOpenData{
-        width:920px;
+        width:calc(100% - 20px);
         margin:0 10px;
     }
     .messageOpenDataFooter{
-        width:920px;
+        width:calc(100% - 20px);
         margin:10px 10px 100px 10px;
     }
 
-    input{
+    input[type="text"],input[type="email"]{
         display:inline-block;
-        width:300px;
-        height:40px;
+        width:14em;
+        height:2em;
         padding: 4px;
 
         border-radius: 6px;
@@ -207,9 +230,10 @@
 
     input[type="submit"]{
         display:inline-block;
-        width:100px;
-        height:40px;
+        /*width:100px;*/
+        /*height:40px;*/
 
+        padding: 6px;
         border-radius: 6px;
         border:1px solid #ccc;
         background: #7d3990;
@@ -218,7 +242,7 @@
 
     textarea{
         border-radius: 6px;
-        width: 920px;
+        width:calc(100% - 20px);
         resize:none;
         padding: 4px;
         border:1px solid #ccc;

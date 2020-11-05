@@ -25,11 +25,12 @@
 
 <style scoped>
     .materialMenuItem{
-        height:45px;
+        /*height:45px;*/
         width:100%;
+        padding: 6px;
         text-align: center;
-        line-height: 45px;
-        font-size:16px;
+        line-height: 1em;
+        font-size:1em;
         border-bottom: 1px solid #ccc;
     }
 </style>

@@ -8,6 +8,7 @@
 
 <script>
     import MaterialItem from "./MaterialItem";
+    // const MaterialItem=()=>import("./MaterialItem");
   export default {
     name: "MaterialList",
     components:{
@@ -34,6 +35,6 @@
     justify-content: center;
     align-items: center;
     flex-wrap:wrap;
-    width: 640px;
+
 }
 </style>

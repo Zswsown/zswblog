@@ -25,10 +25,25 @@
          }
      }
 
+    @media screen and (max-width: 750px) {
+        h2{
+            width: 100%;
+            word-wrap:break-word;
+        }
+    }
+
     h2 {
+        word-break: break-all;
+        padding: 0;
+        margin: 0;
+        position: absolute;
+        left: 50%;
+        top: 28%;
+        transform: translateX(-50%);
+
           color:#7d3990;
             font-family: monospace;
-        font-size:56px;
+        font-size:2em;
         font-weight: 700;
           border-right:1px solid;
           /* fallback */
@@ -41,6 +56,6 @@
       }
 
     h2:hover{
-        font-size:58px;
+        font-size:2.1em;
     }
 </style>
